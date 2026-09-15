@@ -1,0 +1,113 @@
+---
+import { getNavigation, getSite } from '~/lib/content';
+import Button from '~/components/ui/Button.astro';
+import Container from '~/components/ui/Container.astro';
+import Icon from '~/components/ui/Icon.astro';
+import Logo from '~/components/layout/Logo.astro';
+
+const nav = await getNavigation();
+const site = await getSite();
+---
+
+<header
+  id="site-header"
+  class="border-navy/10 sticky top-0 z-40 border-b bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75"
+>
+  <Container>
+    <div class="flex h-16 items-center justify-between gap-4 sm:h-20">
+      <a
+        href="/"
+        class="focus-visible:ring-sky/60 flex shrink-0 items-center rounded-md focus-visible:ring-4"
+        aria-label={`${site.name} — home`}
+      >
+        <Logo class="h-9 w-auto sm:h-11" />
+      </a>
+
+      <nav aria-label="Main" class="hidden items-center gap-1 lg:flex">
+        {
+          nav.header.map((item) => (
+            <a
+              href={item.href}
+              class="font-heading text-navy rounded-full px-4 py-2 text-[15px] font-semibold transition hover:bg-sky-100"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        {
+          nav.headerCta && (
+            <Button href={nav.headerCta.href} class="ml-3">
+              {nav.headerCta.label}
+            </Button>
+          )
+        }
+      </nav>
+
+      <button
+        type="button"
+        class="text-navy focus-visible:ring-sky/60 inline-flex size-11 items-center justify-center rounded-full hover:bg-sky-100 focus-visible:ring-4 lg:hidden"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Open menu"
+        data-menu-toggle
+      >
+        <Icon name="menu" class="size-6" />
+      </button>
+    </div>
+  </Container>
+
+  <div id="mobile-menu" class="border-navy/10 hidden border-t bg-white lg:hidden" data-menu>
+    <Container class="py-3">
+      <nav aria-label="Main (mobile)" class="flex flex-col gap-1">
+        {
+          nav.header.map((item) => (
+            <a
+              href={item.href}
+              class="font-heading text-navy rounded-xl px-4 py-3 text-lg font-semibold hover:bg-sky-100"
+              data-menu-link
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        {
+          nav.headerCta && (
+            <Button href={nav.headerCta.href} size="lg" class="mt-2 w-full" data-menu-link>
+              {nav.headerCta.label}
+            </Button>
+          )
+        }
+      </nav>
+    </Container>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = header?.querySelector<HTMLElement>('[data-menu]');
+
+  function setOpen(open: boolean) {
+    if (!toggle || !menu) return;
+    menu.classList.toggle('hidden', !open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    const icon = toggle.querySelector('svg');
+    if (icon) {
+      icon.innerHTML = open
+        ? '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'
+        : '<path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>';
+    }
+  }
+
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu
+    ?.querySelectorAll('[data-menu-link]')
+    .forEach((link) => link.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setOpen(false);
+  });
+  window.matchMedia('(min-width: 64rem)').addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
+  });
+</script>

@@ -1,20 +1,14 @@
 ---
-import '~/styles/global.css';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/ui/Container.astro';
+import { getHome } from '~/lib/content';
+
+const { hero } = await getHome();
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Societas Lucae</title>
-  </head>
-  <body>
-    <main class="mx-auto max-w-3xl px-4 py-16">
-      <h1 class="font-heading text-navy text-4xl font-bold">Societas Lucae</h1>
-      <p class="text-muted mt-4">
-        Uniting young Catholic medical doctors &amp; students. Site under construction.
-      </p>
-    </main>
-  </body>
-</html>
+<BaseLayout>
+  <Container class="py-16 sm:py-24">
+    <h1 class="font-heading text-navy text-4xl font-bold tracking-tight sm:text-5xl">{hero.title}</h1>
+    <p class="text-muted mt-4 text-lg">Site under construction.</p>
+  </Container>
+</BaseLayout>

@@ -1,0 +1,101 @@
+---
+import { getNavigation, getSite } from '~/lib/content';
+import Container from '~/components/ui/Container.astro';
+import Icon from '~/components/ui/Icon.astro';
+import Logo from '~/components/layout/Logo.astro';
+
+const site = await getSite();
+const nav = await getNavigation();
+const year = new Date().getFullYear();
+const footNote = site.footerNote.replace('{year}', String(year));
+---
+
+<footer class="border-navy/10 bg-cream border-t">
+  <Container class="py-12 sm:py-16">
+    <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div>
+        <Logo class="h-11 w-auto" />
+        <p class="text-muted mt-4 max-w-sm text-[15px] leading-relaxed">{site.shortDescription}</p>
+      </div>
+
+      <nav aria-label="Footer">
+        <h2 class="font-heading text-navy text-sm font-bold tracking-[0.18em] uppercase">Navigate</h2>
+        <ul class="mt-4 grid gap-2">
+          {
+            nav.footer.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="text-ink/80 hover:text-navy inline-block py-1 text-[15px] hover:underline"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="font-heading text-navy text-sm font-bold tracking-[0.18em] uppercase">Contact</h2>
+        <ul class="mt-4 grid gap-2">
+          <li>
+            <a
+              href={`mailto:${site.contactEmail}`}
+              class="text-ink/80 hover:text-navy inline-flex items-center gap-2 py-1 text-[15px] hover:underline"
+            >
+              <Icon name="mail" class="text-navy size-5 shrink-0" />
+              <span class="break-all">{site.contactEmail}</span>
+            </a>
+          </li>
+          {
+            site.socialLinks
+              .filter((s) => s.platform !== 'email')
+              .map((s) => (
+                <li>
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-ink/80 hover:text-navy inline-flex items-center gap-2 py-1 text-[15px] hover:underline"
+                  >
+                    <Icon name={s.platform} class="text-navy size-5 shrink-0" />
+                    {s.label}
+                  </a>
+                </li>
+              ))
+          }
+          {
+            site.flyer && (
+              <li>
+                <a
+                  href={site.flyer}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-ink/80 hover:text-navy inline-flex items-center gap-2 py-1 text-[15px] hover:underline"
+                >
+                  <Icon name="download" class="text-navy size-5 shrink-0" />
+                  Download our flyer (PDF)
+                </a>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="border-navy/10 text-muted mt-10 flex flex-col gap-2 border-t pt-6 text-sm sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>{footNote}</p>
+      <p>
+        Youth outreach of <a
+          href="https://www.fiamc.org/"
+          class="text-navy font-semibold hover:underline"
+          target="_blank"
+          rel="noopener noreferrer">FIAMC</a
+        >
+      </p>
+    </div>
+  </Container>
+</footer>
