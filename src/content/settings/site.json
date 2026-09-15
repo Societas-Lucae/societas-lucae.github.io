@@ -1,0 +1,18 @@
+{
+  "name": "Societas Lucae",
+  "tagline": "Uniting young Catholic medical doctors & students",
+  "shortDescription": "Societas Lucae is an international network of young Catholic medical doctors and students, the youth outreach of FIAMC.",
+  "contactEmail": "societas.lucae@gmail.com",
+  "joinFormUrl": "https://forms.gle/Y8vt7foa5zunaQdm9",
+  "flyer": "/files/flyer-societas-lucae.pdf",
+  "logo": "/src/assets/uploads/brand/logo-landscape.svg",
+  "logoMark": "/src/assets/uploads/brand/logo-cross.png",
+  "socialLinks": [
+    { "platform": "instagram", "label": "Instagram", "url": "https://www.instagram.com/societas.lucae/" },
+    { "platform": "email", "label": "E-mail", "url": "mailto:societas.lucae@gmail.com" }
+  ],
+  "footerNote": "© {year} Societas Lucae. All rights reserved.",
+  "analytics": {
+    "googleAnalyticsId": ""
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "hero": {
+    "title": "Uniting young Catholic medical doctors & students",
+    "quote": "I fervently hope that (...) you will be able to give fresh, courageous vitality to your Gospel witness in the important area of medicine and health care.",
+    "quoteAuthor": "St John Paul II",
+    "ctaLabel": "Join us",
+    "secondaryCtaLabel": "Discover our events",
+    "image": "/src/assets/uploads/brand/logo-cross.png",
+    "imageAlt": "Societas Lucae logo: a blue cross with a golden serpent"
+  },
+  "countries": {
+    "title": "Countries part of the network",
+    "items": [
+      { "name": "Albania", "code": "al" },
+      { "name": "Austria", "code": "at" },
+      { "name": "Belgium", "code": "be" },
+      { "name": "Brazil", "code": "br" },
+      { "name": "Central African Republic", "code": "cf" },
+      { "name": "Colombia", "code": "co" },
+      { "name": "Croatia", "code": "hr" },
+      { "name": "Czech Republic", "code": "cz" },
+      { "name": "England", "code": "gb-eng" },
+      { "name": "Finland", "code": "fi" },
+      { "name": "France", "code": "fr" },
+      { "name": "Germany", "code": "de" },
+      { "name": "Hungary", "code": "hu" },
+      { "name": "Italy", "code": "it" },
+      { "name": "Malta", "code": "mt" },
+      { "name": "Netherlands", "code": "nl" },
+      { "name": "Norway", "code": "no" },
+      { "name": "Poland", "code": "pl" },
+      { "name": "Portugal", "code": "pt" },
+      { "name": "Slovakia", "code": "sk" },
+      { "name": "Slovenia", "code": "si" },
+      { "name": "Spain", "code": "es" },
+      { "name": "Sweden", "code": "se" },
+      { "name": "Switzerland", "code": "ch" },
+      { "name": "Timor-Leste", "code": "tl" }
+    ]
+  },
+  "about": {
+    "tagline": "Who we are",
+    "title": "A network of young Catholic doctors and medical students",
+    "body": "As believers engaged in medicine, we feel blessed with a unique calling. This is why we greatly appreciate the chance to exchange with others who understand what it means, for they live it too. This desire was the driving force behind the launch of Societas Lucae.\n\nSince January 2025, Societas Lucae is recognized as the youth outreach of [FIAMC](https://www.fiamc.org/), the official federation of national medical associations of the Catholic Church.\n\nUnited by our faith, our vocation and the desire to place our life and work in God's hands, we see friendship as a foundation to build a better world on.",
+    "image": "/src/assets/uploads/home/who-we-are.jpg",
+    "imageAlt": "Young doctors and medical students sitting in a circle under pine trees",
+    "manifesto": [
+      {
+        "title": "We believe Christ is in each patient.",
+        "text": "Every human person has been lovingly created by God with profound dignity. As modern Good Samaritans, we believe that every patient deserves to be treated with tenderness and compassion from conception to natural death."
+      },
+      {
+        "title": "We strive to follow God's call to care and heal.",
+        "text": "Being a Catholic in medical school is hard, but our call is a gift. God chose us for greatness, not comfort, and we rejoice in our call to be icons of hope and sharers of healing love in a world of brokenness."
+      },
+      {
+        "title": "We are not alone.",
+        "text": "Every struggle we encounter, we face together. We experience joy when spending time in fellowship with peers, role models and mentors who learn to follow Christ faithfully as physicians."
+      }
+    ]
+  },
+  "values": {
+    "title": "Our values",
+    "items": [
+      {
+        "title": "Care",
+        "description": "We foster a shared commitment to become skilled, dedicated and caring physicians.",
+        "image": "/src/assets/uploads/home/value-care.png"
+      },
+      {
+        "title": "Prayer",
+        "description": "“Pray without ceasing”, said St Paul. By genuinely loving our patients and peers, we seek to live out that call.",
+        "image": "/src/assets/uploads/home/value-prayer.png"
+      },
+      {
+        "title": "Together",
+        "description": "Friendship is the spark that got us going as well as the fire which keeps us moving.",
+        "image": "/src/assets/uploads/home/value-together.png"
+      }
+    ]
+  },
+  "whatWeDo": {
+    "tagline": "What we do",
+    "title": "Empower, support, connect and inspire",
+    "items": [
+      {
+        "title": "Empower",
+        "icon": "graduation",
+        "description": "We offer educational programs about topics related to medicine and faith. Members and any other interested people are regularly invited to online and face-to-face conferences."
+      },
+      {
+        "title": "Support",
+        "icon": "heart",
+        "description": "We offer help in challenging situations. Whether someone needs a listening ear, a clear answer on a specific topic, or access to resources we can provide, offering support to our members in need is one of our top priorities."
+      },
+      {
+        "title": "Connect",
+        "icon": "globe",
+        "description": "We encourage true and strong friendship connections on a national level and across borders. Besides creating personal and professional opportunities, this aspect also lets us share valuable quality moments together."
+      },
+      {
+        "title": "Inspire",
+        "icon": "spark",
+        "description": "We create an environment in which new personal and societal projects can take shape - through brainstorming, inspiring figures, and mutual encouragement."
+      }
+    ]
+  },
+  "events": {
+    "tagline": "Events",
+    "title": "Where we meet, learn and pray together",
+    "intro": "From online conferences to our annual Lucae Lab, our events bring members and friends together across borders. Click a category to see what is coming up and what we have done so far."
+  },
+  "join": {
+    "tagline": "Get involved",
+    "title": "Want to join?",
+    "text": "If you are a medical student or resident doctor up to 40 years old, join us! We are waiting for you!",
+    "expandedText": "If you are a medical student or a young medical doctor and would like to join Societas Lucae, please fill in the form below. Once we receive your details, we will get in touch with you and connect you with your national group and our international communication channels. Through these communities, you will stay connected with other members and receive regular invitations to our various events.",
+    "ctaLabel": "Join us",
+    "finalCtaLabel": "Fill in the membership form",
+    "contactLabel": "Get in touch"
+  },
+  "testimonials": {
+    "tagline": "Testimonials",
+    "title": "In their own words"
+  },
+  "help": {
+    "tagline": "How you can help",
+    "title": "We cannot do this alone!",
+    "image": "/src/assets/uploads/home/join-us.jpg",
+    "imageAlt": "Audience of young doctors listening to a welcome message in a lecture hall",
+    "items": [
+      {
+        "title": "Prayer",
+        "icon": "flame",
+        "description": "We are gifted with the blessing of receiving daily spiritual support from a contemplative monastery. Join them and us in our prayers!"
+      },
+      {
+        "title": "Speakers",
+        "icon": "microphone",
+        "description": "We are always looking for inspiring people who want to share their experience or knowledge. Reach out if you or someone you know fit this description."
+      },
+      {
+        "title": "Collaboration",
+        "icon": "users",
+        "description": "If a project you know of or manage has similar values and objectives, we would be happy to look for ways to help one another."
+      },
+      {
+        "title": "Donation",
+        "icon": "gift",
+        "description": "All our members serve on a voluntary basis. Our actions, however, rely on donations. If you consider donating, we would be happy to present our activities and their cost to you – please contact us at societas.lucae@gmail.com."
+      }
+    ],
+    "contactLine": "Contact us at"
+  }
+}
