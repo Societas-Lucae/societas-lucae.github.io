@@ -1,0 +1,159 @@
+---
+import { getEventCategories, getHome, getPublishedEvents, isUpcoming } from '~/lib/content';
+import Container from '~/components/ui/Container.astro';
+import Icon from '~/components/ui/Icon.astro';
+import Section from '~/components/ui/Section.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+import EventCard from '~/components/events/EventCard.astro';
+import EventDialog from '~/components/events/EventDialog.astro';
+
+const home = await getHome();
+const categories = await getEventCategories();
+const events = await getPublishedEvents();
+const now = new Date();
+
+const groups = categories.map((category) => {
+  const own = events.filter((e) => e.data.category === category.id);
+  const upcoming = own
+    .filter((e) => isUpcoming(e, now))
+    .sort((a, b) => a.data.startDate.getTime() - b.data.startDate.getTime());
+  const past = own.filter((e) => !isUpcoming(e, now));
+  return { category, upcoming, past };
+});
+
+// Open by default the category with the soonest upcoming event, else the first one.
+const withUpcoming = groups.filter((g) => g.upcoming.length > 0);
+const defaultOpen =
+  withUpcoming.sort(
+    (a, b) => a.upcoming[0]!.data.startDate.getTime() - b.upcoming[0]!.data.startDate.getTime()
+  )[0]?.category.id ?? groups[0]?.category.id;
+
+const orphan = events.filter((e) => !categories.some((c) => c.id === e.data.category));
+if (orphan.length) console.warn('[events] Events with unknown category:', orphan.map((e) => e.id).join(', '));
+---
+
+<Section id="events" tone="sky" labelledBy="events-title">
+  <Container>
+    <SectionHeading
+      id="events-title"
+      tagline={home.events.tagline}
+      title={home.events.title}
+      intro={home.events.intro}
+      align="center"
+    />
+
+    <div class="mt-10 grid gap-4 lg:mt-14" data-events>
+      {
+        groups.map(({ category, upcoming, past }) => (
+          <details
+            class="group border-navy/10 open:shadow-navy/5 rounded-3xl border bg-white shadow-sm open:shadow-lg"
+            name="event-category"
+            id={`events-${category.id}`}
+            open={category.id === defaultOpen}
+          >
+            <summary class="flex cursor-pointer list-none items-center gap-4 p-5 sm:p-6 [&::-webkit-details-marker]:hidden">
+              <span class="text-navy inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-sky-100">
+                <Icon name={category.data.icon} class="size-6" />
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <h3 class="font-heading text-navy text-xl font-bold sm:text-2xl">{category.data.title}</h3>
+                  {upcoming.length > 0 && (
+                    <span class="bg-gold font-heading text-ink rounded-full px-2.5 py-0.5 text-xs font-bold tracking-wider uppercase">
+                      {upcoming.length === 1 ? '1 upcoming' : `${upcoming.length} upcoming`}
+                    </span>
+                  )}
+                </span>
+                <span class="text-ink/70 mt-0.5 block text-[15px]">{category.data.subtitle}</span>
+              </span>
+              <Icon
+                name="chevron"
+                class="text-navy size-6 shrink-0 transition-transform duration-300 group-open:rotate-180"
+              />
+            </summary>
+
+            <div class="border-navy/10 border-t px-5 pt-5 pb-6 sm:px-6 sm:pb-8">
+              <p class="text-ink/80 max-w-3xl text-[16px] leading-relaxed">{category.data.description}</p>
+
+              <div class="mt-6">
+                <h4 class="font-heading text-gold-600 text-sm font-bold tracking-[0.18em] uppercase">Next</h4>
+                {upcoming.length > 0 ? (
+                  <ul class="mt-3 grid gap-4">
+                    {upcoming.map((event) => (
+                      <li>
+                        <EventCard event={event} variant="upcoming" />
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="text-ink/70 mt-2 text-[15px]">
+                    {category.data.upcomingNote ?? 'To be announced.'}
+                  </p>
+                )}
+              </div>
+
+              {past.length > 0 && (
+                <div class="mt-8">
+                  <h4 class="font-heading text-navy text-sm font-bold tracking-[0.18em] uppercase">
+                    {category.data.pastLabel}
+                  </h4>
+                  <ul class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+                    {past.map((event) => (
+                      <li>
+                        <EventCard event={event} variant="past" />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </Container>
+
+  {
+    groups.map(({ category, upcoming, past }) =>
+      [...upcoming, ...past].map((event) => <EventDialog event={event} categoryTitle={category.data.title} />)
+    )
+  }
+</Section>
+
+<script>
+  const dialogs = new Map<string, HTMLDialogElement>();
+  document.querySelectorAll<HTMLDialogElement>('dialog.event-dialog').forEach((d) => dialogs.set(d.id, d));
+
+  const lockScroll = (locked: boolean) => {
+    document.documentElement.classList.toggle('overflow-hidden', locked);
+  };
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-event-open]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const dialog = dialogs.get(link.dataset.eventOpen ?? '');
+      if (!dialog || typeof dialog.showModal !== 'function') return; // fall back to the event page
+      event.preventDefault();
+      dialog.showModal();
+      lockScroll(true);
+      dialog.querySelector<HTMLElement>('[data-event-close]')?.focus();
+    });
+  });
+
+  dialogs.forEach((dialog) => {
+    dialog.querySelector('[data-event-close]')?.addEventListener('click', () => dialog.close());
+    // Click on the backdrop closes the dialog.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => lockScroll(false));
+  });
+
+  // Deep link: /#events-lucae-lab opens that category.
+  const openFromHash = () => {
+    const target =
+      window.location.hash && document.querySelector<HTMLDetailsElement>(`details${window.location.hash}`);
+    if (target) target.open = true;
+  };
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
+</script>
