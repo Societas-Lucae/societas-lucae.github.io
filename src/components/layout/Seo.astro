@@ -1,0 +1,105 @@
+---
+import { getImage } from 'astro:assets';
+import { getSeo, getSite } from '~/lib/content';
+import { resolveImage } from '~/lib/images';
+
+export interface SeoProps {
+  title?: string;
+  description?: string;
+  /** Use the title as-is instead of applying the template. */
+  rawTitle?: boolean;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const seo = await getSeo();
+const site = await getSite();
+const {
+  title,
+  description,
+  rawTitle = false,
+  image,
+  type = 'website',
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const pageTitle = title ? (rawTitle ? title : seo.titleTemplate.replace('%s', title)) : seo.defaultTitle;
+const pageDescription = description ?? seo.defaultDescription;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const ogSource = resolveImage(image || seo.ogImage || '');
+const ogImage = ogSource
+  ? new URL((await getImage({ src: ogSource, format: 'png', width: 1200 })).src, Astro.site)
+  : undefined;
+
+const robots =
+  noindex || !seo.robots.index ? 'noindex, nofollow' : `index, ${seo.robots.follow ? 'follow' : 'nofollow'}`;
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  legalName: seo.organization?.legalName ?? site.name,
+  url: Astro.site?.toString(),
+  logo: new URL('/favicon.svg', Astro.site).toString(),
+  email: site.contactEmail,
+  description: site.shortDescription,
+  foundingDate: seo.organization?.foundingDate,
+  sameAs: site.socialLinks.filter((s) => s.platform !== 'email').map((s) => s.url),
+  parentOrganization: seo.organization?.parentOrganization
+    ? {
+        '@type': 'Organization',
+        name: seo.organization.parentOrganization,
+        url: seo.organization.parentOrganizationUrl,
+      }
+    : undefined,
+};
+const graph = [organization, ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [])];
+const gaId = site.analytics?.googleAnalyticsId;
+const gaSnippet = gaId
+  ? `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',${JSON.stringify(gaId)},{anonymize_ip:true});`
+  : '';
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={pageDescription} />
+{seo.keywords.length > 0 && <meta name="keywords" content={seo.keywords.join(', ')} />}
+<meta name="robots" content={robots} />
+<link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang="en" href={canonical} />
+<link rel="alternate" hreflang="x-default" href={canonical} />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+{seo.googleSiteVerification && <meta name="google-site-verification" content={seo.googleSiteVerification} />}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:url" content={canonical} />
+{ogImage && <meta property="og:image" content={ogImage} />}
+{ogImage && <meta property="og:image:width" content="1200" />}
+{ogImage && <meta property="og:image:height" content="630" />}
+<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={pageDescription} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
+{seo.twitterHandle && <meta name="twitter:site" content={seo.twitterHandle} />}
+
+<script type="application/ld+json" set:html={JSON.stringify(graph)} />
+
+{
+  gaId && (
+    <>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+      <script is:inline set:html={gaSnippet} />
+    </>
+  )
+}

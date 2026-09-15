@@ -1,0 +1,25 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  tone?: 'white' | 'cream' | 'sky' | 'navy';
+  padding?: 'default' | 'tight' | 'none';
+  labelledBy?: string;
+}
+const { id, class: className = '', tone = 'white', padding = 'default', labelledBy } = Astro.props;
+const tones = {
+  white: 'bg-white',
+  cream: 'bg-cream',
+  sky: 'bg-sky-50',
+  navy: 'bg-navy text-white',
+};
+const paddings = { default: 'py-16 sm:py-20 lg:py-24', tight: 'py-10 sm:py-12', none: '' };
+---
+
+<section
+  id={id}
+  aria-labelledby={labelledBy}
+  class={`scroll-mt-20 overflow-x-clip ${tones[tone]} ${paddings[padding]} ${className}`}
+>
+  <slot />
+</section>
