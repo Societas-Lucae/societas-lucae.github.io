@@ -1,0 +1,41 @@
+---
+import type { EventEntry } from '~/lib/content';
+import EventDetails from '~/components/events/EventDetails.astro';
+import Icon from '~/components/ui/Icon.astro';
+
+interface Props {
+  event: EventEntry;
+  categoryTitle: string;
+}
+const { event, categoryTitle } = Astro.props;
+const id = `event-${event.id}`;
+---
+
+<dialog
+  id={id}
+  class="event-dialog text-ink backdrop:bg-navy-900/60 m-0 h-dvh max-h-none w-full max-w-none bg-white p-0 backdrop:backdrop-blur-sm sm:m-auto sm:h-auto sm:max-h-[90dvh] sm:w-[min(64rem,calc(100%-2rem))] sm:rounded-3xl sm:shadow-2xl"
+  aria-labelledby={`${id}-title`}
+>
+  <div class="flex h-full max-h-dvh flex-col sm:max-h-[90dvh]">
+    <div class="border-navy/10 flex items-center justify-between gap-4 border-b px-4 py-3 sm:px-6">
+      <a
+        href={`/events/${event.id}`}
+        class="text-navy inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"
+      >
+        <Icon name="external" class="size-4" />
+        Open event page
+      </a>
+      <button
+        type="button"
+        class="text-navy focus-visible:ring-sky/60 inline-flex size-11 items-center justify-center rounded-full hover:bg-sky-100 focus-visible:ring-4"
+        aria-label="Close"
+        data-event-close
+      >
+        <Icon name="close" class="size-6" />
+      </button>
+    </div>
+    <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-6 sm:px-8 sm:py-8">
+      <EventDetails event={event} categoryTitle={categoryTitle} headingId={`${id}-title`} />
+    </div>
+  </div>
+</dialog>

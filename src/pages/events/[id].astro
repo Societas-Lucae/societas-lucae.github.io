@@ -1,0 +1,58 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getEntry } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/ui/Container.astro';
+import Icon from '~/components/ui/Icon.astro';
+import EventDetails from '~/components/events/EventDetails.astro';
+import { getPublishedEvents, toIsoDate } from '~/lib/content';
+
+export const getStaticPaths = (async () => {
+  const events = await getPublishedEvents();
+  return events.map((event) => ({ params: { id: event.id }, props: { event } }));
+}) satisfies GetStaticPaths;
+
+const { event } = Astro.props;
+const category = await getEntry('eventCategories', event.data.category);
+const categoryTitle = category?.data.title ?? 'Events';
+const site = Astro.site?.toString() ?? '';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: event.data.title,
+  description: event.data.summary,
+  startDate: toIsoDate(event.data.startDate),
+  endDate: toIsoDate(event.data.endDate ?? event.data.startDate),
+  eventAttendanceMode: event.data.online
+    ? 'https://schema.org/OnlineEventAttendanceMode'
+    : 'https://schema.org/OfflineEventAttendanceMode',
+  location: event.data.online
+    ? { '@type': 'VirtualLocation', url: new URL(`/events/${event.id}`, site).toString() }
+    : { '@type': 'Place', name: event.data.location ?? '', address: event.data.location ?? '' },
+  organizer: { '@type': 'Organization', name: 'Societas Lucae', url: site },
+  performer: event.data.speakers.map((s) => ({ '@type': 'Person', name: s.name, jobTitle: s.role })),
+  url: new URL(`/events/${event.id}`, site).toString(),
+};
+---
+
+<BaseLayout
+  title={event.data.title}
+  description={event.data.summary}
+  image={event.data.image}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <Container class="py-10 sm:py-14">
+    <a
+      href={`/#events-${event.data.category}`}
+      class="font-heading text-navy inline-flex items-center gap-2 text-sm font-semibold hover:underline"
+    >
+      <Icon name="arrow" class="size-4 rotate-180" />
+      Back to events
+    </a>
+    <div class="border-navy/10 mt-6 rounded-3xl border bg-white p-5 shadow-sm sm:p-8 lg:p-10">
+      <EventDetails event={event} categoryTitle={categoryTitle} headingLevel="h1" />
+    </div>
+  </Container>
+</BaseLayout>

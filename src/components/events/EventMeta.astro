@@ -1,0 +1,41 @@
+---
+import type { EventEntry } from '~/lib/content';
+import { formatEventDates } from '~/lib/content';
+import Icon from '~/components/ui/Icon.astro';
+
+interface Props {
+  event: EventEntry;
+  class?: string;
+  compact?: boolean;
+}
+const { event, class: className = '', compact = false } = Astro.props;
+const { data } = event;
+---
+
+<dl class={`flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-ink/75 ${className}`}>
+  <div class="flex items-center gap-2">
+    <dt class="sr-only">Date</dt>
+    <Icon name="calendar" class="text-navy size-4.5 shrink-0" />
+    <dd>
+      <time datetime={data.startDate.toISOString().slice(0, 10)}>{formatEventDates(event)}</time>
+    </dd>
+  </div>
+  {
+    data.time && (
+      <div class="flex items-center gap-2">
+        <dt class="sr-only">Time</dt>
+        <Icon name="clock" class="text-navy size-4.5 shrink-0" />
+        <dd>{data.time}</dd>
+      </div>
+    )
+  }
+  {
+    data.location && !compact && (
+      <div class="flex items-center gap-2">
+        <dt class="sr-only">Location</dt>
+        <Icon name={data.online ? 'video' : 'pin'} class="text-navy size-4.5 shrink-0" />
+        <dd>{data.location}</dd>
+      </div>
+    )
+  }
+</dl>
