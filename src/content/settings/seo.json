@@ -1,0 +1,27 @@
+{
+  "defaultTitle": "Societas Lucae — Uniting young Catholic medical doctors & students",
+  "titleTemplate": "%s — Societas Lucae",
+  "defaultDescription": "Societas Lucae is the international network of young Catholic doctors and medical students, recognised as the youth outreach of FIAMC. Empower, support, connect and inspire.",
+  "keywords": [
+    "Societas Lucae",
+    "Catholic doctors",
+    "Catholic medical students",
+    "FIAMC",
+    "young physicians",
+    "medicine and faith",
+    "Lucae Lab"
+  ],
+  "ogImage": "/src/assets/uploads/brand/og-image.png",
+  "twitterHandle": "",
+  "googleSiteVerification": "lyHiaEtKXKwsHOJv-NQ-z8dv7-NzTenY0ft2piq1Alg",
+  "robots": {
+    "index": true,
+    "follow": true
+  },
+  "organization": {
+    "legalName": "Societas Lucae",
+    "foundingDate": "2023",
+    "parentOrganization": "FIAMC — World Federation of the Catholic Medical Associations",
+    "parentOrganizationUrl": "https://www.fiamc.org/"
+  }
+}

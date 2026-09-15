@@ -1,0 +1,17 @@
+{
+  "header": [
+    { "label": "Who we are", "href": "/#who-we-are" },
+    { "label": "What we do", "href": "/#what-we-do" },
+    { "label": "Events", "href": "/#events" },
+    { "label": "Get involved", "href": "/#get-involved" }
+  ],
+  "headerCta": { "label": "Join us", "href": "/#join" },
+  "footer": [
+    { "label": "Who we are", "href": "/#who-we-are" },
+    { "label": "What we do", "href": "/#what-we-do" },
+    { "label": "Events", "href": "/#events" },
+    { "label": "Testimonials", "href": "/#testimonials" },
+    { "label": "Get involved", "href": "/#get-involved" },
+    { "label": "Privacy", "href": "/privacy" }
+  ]
+}
