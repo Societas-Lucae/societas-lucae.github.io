@@ -1,0 +1,42 @@
+---
+import { getHome, getSite } from '~/lib/content';
+import Button from '~/components/ui/Button.astro';
+import Container from '~/components/ui/Container.astro';
+import Icon from '~/components/ui/Icon.astro';
+import JoinDisclosure from '~/components/ui/JoinDisclosure.astro';
+import Section from '~/components/ui/Section.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+
+const { join } = await getHome();
+const site = await getSite();
+---
+
+<Section id="join" tone="navy" labelledBy="join-title" class="relative">
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_24rem_at_100%_0%,rgba(157,191,217,0.35),transparent_60%)]"
+    aria-hidden="true"
+  >
+  </div>
+  <Container class="relative">
+    <div class="mx-auto flex max-w-3xl flex-col items-center text-center">
+      <SectionHeading id="join-title" tagline={join.tagline} title={join.title} tone="light" align="center" />
+      <p class="mt-5 text-lg leading-relaxed text-sky-100">{join.text}</p>
+      <div class="mt-8 flex w-full flex-col items-center gap-4">
+        <JoinDisclosure
+          id="join-panel"
+          label={join.ctaLabel}
+          text={join.expandedText}
+          finalLabel={join.finalCtaLabel}
+          formUrl={site.joinFormUrl}
+          tone="light"
+          align="center"
+          openOnHash="#join"
+        />
+        <Button href={`mailto:${site.contactEmail}`} variant="light" size="md">
+          <Icon name="mail" class="size-5" />
+          {join.contactLabel}
+        </Button>
+      </div>
+    </div>
+  </Container>
+</Section>

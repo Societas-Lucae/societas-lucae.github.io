@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import { getHome, getSite } from '~/lib/content';
+import { requireImage } from '~/lib/images';
+import Container from '~/components/ui/Container.astro';
+import Icon from '~/components/ui/Icon.astro';
+import Section from '~/components/ui/Section.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+
+const { help } = await getHome();
+const site = await getSite();
+const image = requireImage(help.image);
+
+/** Turn a bare e-mail address inside a description into a link (Markdown autolinks are not used here). */
+const escape = (text: string) =>
+  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const linkify = (text: string) =>
+  escape(text).replace(
+    /([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})/gi,
+    '<a href="mailto:$1" class="font-semibold text-navy underline decoration-gold underline-offset-4 break-all">$1</a>'
+  );
+---
+
+<Section id="get-involved" tone="cream" labelledBy="get-involved-title">
+  <Container>
+    <div class="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div class="lg:sticky lg:top-28">
+        <SectionHeading id="get-involved-title" tagline={help.tagline} title={help.title} />
+        <Image
+          src={image}
+          alt={help.imageAlt}
+          widths={[480, 720, 960]}
+          sizes="(min-width: 1024px) 30rem, 100vw"
+          class="shadow-navy/10 mt-8 aspect-[3/2] w-full rounded-3xl object-cover shadow-lg"
+          loading="lazy"
+        />
+      </div>
+      <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+        {
+          help.items.map((item) => (
+            <li class="ring-navy/5 flex min-w-0 gap-4 rounded-3xl bg-white p-5 ring-1 sm:p-6">
+              <span class="bg-honey text-navy inline-flex size-11 shrink-0 items-center justify-center rounded-2xl">
+                <Icon name={item.icon} class="size-5" />
+              </span>
+              <div class="min-w-0">
+                <h3 class="font-heading text-navy text-lg font-bold">{item.title}</h3>
+                <p
+                  class="text-ink/75 mt-1.5 text-[15px] leading-relaxed"
+                  set:html={linkify(item.description)}
+                />
+              </div>
+            </li>
+          ))
+        }
+        {
+          help.contactLine && (
+            <li class="text-ink/75 px-1 pt-2 text-[15px]">
+              {help.contactLine}{' '}
+              <a
+                href={`mailto:${site.contactEmail}`}
+                class="text-navy decoration-gold font-semibold underline underline-offset-4"
+              >
+                {site.contactEmail}
+              </a>
+            </li>
+          )
+        }
+      </ul>
+    </div>
+  </Container>
+</Section>

@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import { getHome } from '~/lib/content';
+import { requireImage } from '~/lib/images';
+import { renderMarkdown } from '~/lib/markdown';
+import Container from '~/components/ui/Container.astro';
+import Section from '~/components/ui/Section.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+
+const { about } = await getHome();
+const image = requireImage(about.image);
+const body = renderMarkdown(about.body);
+---
+
+<Section id="who-we-are" labelledBy="who-we-are-title">
+  <Container>
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div class="relative">
+        <div
+          class="bg-honey/70 absolute -top-4 -left-4 hidden h-40 w-40 rounded-full sm:block"
+          aria-hidden="true"
+        >
+        </div>
+        <Image
+          src={image}
+          alt={about.imageAlt}
+          widths={[480, 720, 960, 1200]}
+          sizes="(min-width: 1024px) 34rem, 100vw"
+          class="shadow-navy/10 relative aspect-[4/3] w-full rounded-3xl object-cover shadow-xl"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <SectionHeading id="who-we-are-title" tagline={about.tagline} title={about.title} />
+        <div
+          class="prose-links text-ink/80 [&_a]:text-navy [&_a]:decoration-gold [&_a:hover]:text-navy-900 mt-6 space-y-4 text-[17px] leading-relaxed [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4"
+          set:html={body}
+        />
+      </div>
+    </div>
+
+    {
+      about.manifesto.length > 0 && (
+        <ul class="mt-14 grid gap-5 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3" aria-label="Our manifesto">
+          {about.manifesto.map((item, index) => (
+            <li class="border-navy/10 flex flex-col rounded-3xl border bg-sky-50 p-6 sm:p-7">
+              <span class="font-heading text-gold-600 text-sm font-bold">0{index + 1}</span>
+              <h3 class="font-heading text-navy mt-2 text-xl leading-snug font-bold">{item.title}</h3>
+              <p class="text-ink/75 mt-3 text-[15px] leading-relaxed">{item.text}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </Container>
+</Section>

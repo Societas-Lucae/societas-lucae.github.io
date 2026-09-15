@@ -1,0 +1,85 @@
+---
+import { getHome } from '~/lib/content';
+import Flag from '~/components/ui/Flag.astro';
+
+const { countries } = await getHome();
+const items = [...countries.items].sort((a, b) => a.name.localeCompare(b.name, 'en'));
+// Roughly 3.2 s per country keeps the ribbon readable at any list length.
+const duration = Math.max(30, Math.round(items.length * 3.2));
+---
+
+<section
+  id="countries"
+  aria-labelledby="countries-title"
+  class="border-navy/10 border-y bg-sky-50 py-8 sm:py-10"
+>
+  <h2
+    id="countries-title"
+    class="font-heading text-navy text-center text-sm font-bold tracking-[0.18em] uppercase"
+  >
+    {countries.title}
+  </h2>
+
+  <div
+    class="marquee group relative mt-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+    style={`--marquee-duration: ${duration}s`}
+  >
+    <ul
+      class="marquee-track flex w-max items-center gap-8 pr-8 sm:gap-12 sm:pr-12"
+      aria-label="Member countries"
+    >
+      {
+        items.map((c) => (
+          <li class="font-heading text-navy flex shrink-0 items-center gap-3 text-[15px] font-semibold whitespace-nowrap">
+            <Flag code={c.code} label={c.name} class="h-6 w-8" />
+            {c.name}
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="marquee-track flex w-max items-center gap-8 pr-8 sm:gap-12 sm:pr-12" aria-hidden="true">
+      {
+        items.map((c) => (
+          <li class="font-heading text-navy flex shrink-0 items-center gap-3 text-[15px] font-semibold whitespace-nowrap">
+            <Flag code={c.code} label={c.name} class="h-6 w-8" />
+            {c.name}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .marquee {
+    display: flex;
+  }
+  .marquee-track {
+    animation: marquee var(--marquee-duration, 80s) linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      overflow-x: auto;
+      mask-image: none;
+      padding: 0 1rem 0.5rem;
+    }
+    .marquee-track {
+      animation: none;
+    }
+    .marquee-track[aria-hidden='true'] {
+      display: none;
+    }
+  }
+</style>
