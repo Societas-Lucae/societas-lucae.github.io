@@ -9,7 +9,7 @@ import tailwindcss from '@tailwindcss/vite';
  * - Production: set SITE_URL=https://societaslucae.org in the deploy workflow
  *   once the custom domain is attached to the repository.
  */
-const site = process.env.SITE_URL ?? 'https://societas-lucae.github.io';
+const site = process.env.SITE_URL || 'https://societas-lucae.github.io';
 
 export default defineConfig({
   site,
