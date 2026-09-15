@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+import { getHome, getPublishedTestimonials } from '~/lib/content';
+import { resolveImage } from '~/lib/images';
+import Container from '~/components/ui/Container.astro';
+import Icon from '~/components/ui/Icon.astro';
+import Section from '~/components/ui/Section.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+
+const home = await getHome();
+const testimonials = await getPublishedTestimonials();
+---
+
+{
+  testimonials.length > 0 && (
+    <Section id="testimonials" labelledBy="testimonials-title">
+      <Container>
+        <SectionHeading
+          id="testimonials-title"
+          tagline={home.testimonials.tagline}
+          title={home.testimonials.title}
+          align="center"
+        />
+        <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
+          {testimonials.map((t) => {
+            const photo = resolveImage(t.data.image || '');
+            const meta = [t.data.role, t.data.country].filter(Boolean).join(' · ');
+            return (
+              <li class="border-navy/10 bg-cream flex flex-col rounded-3xl border p-6 sm:p-7">
+                <Icon name="quote" class="text-gold size-8" />
+                <blockquote class="text-ink/85 mt-4 flex-1 text-[16px] leading-relaxed">
+                  <p>“{t.data.quote}”</p>
+                </blockquote>
+                <figcaption class="mt-5 flex items-center gap-3">
+                  {photo ? (
+                    <Image
+                      src={photo}
+                      alt=""
+                      width={96}
+                      height={96}
+                      class="size-12 rounded-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span
+                      class="font-heading text-navy inline-flex size-12 items-center justify-center rounded-full bg-sky-100 text-lg font-bold"
+                      aria-hidden="true"
+                    >
+                      {t.data.name.replace(/^(Dr|Prof\.?|Sample)\s+/i, '').charAt(0)}
+                    </span>
+                  )}
+                  <div class="min-w-0">
+                    <p class="font-heading text-navy font-bold">{t.data.name}</p>
+                    {meta && <p class="text-ink/65 text-sm">{meta}</p>}
+                  </div>
+                </figcaption>
+              </li>
+            );
+          })}
+        </ul>
+      </Container>
+    </Section>
+  )
+}
