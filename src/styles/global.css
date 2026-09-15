@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource-variable/inter';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Plus Jakarta Sans Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand palette (moodboard 2026 + historical logo colours) */
+  --color-navy-900: #1c3a58;
+  --color-navy: #2e5984;
+  --color-navy-600: #3d6f9f;
+  --color-sky: #9dbfd9;
+  --color-sky-200: #c9dcea;
+  --color-sky-100: #e6eff6;
+  --color-sky-50: #f3f7fb;
+  --color-gold: #c9a244;
+  --color-gold-600: #a8842f;
+  --color-honey: #fbefb5;
+  --color-cream: #f6f3ea;
+  --color-sand: #ede9dd;
+  --color-ink: #1b1411;
+  --color-muted: #5a6b7d;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply text-ink bg-white font-sans antialiased;
+}
