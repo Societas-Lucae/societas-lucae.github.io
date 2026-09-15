@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import { getHome, getSite } from '~/lib/content';
+import { requireImage } from '~/lib/images';
+import Container from '~/components/ui/Container.astro';
+import Button from '~/components/ui/Button.astro';
+import Icon from '~/components/ui/Icon.astro';
+import JoinDisclosure from '~/components/ui/JoinDisclosure.astro';
+
+const { hero, join } = await getHome();
+const site = await getSite();
+const image = requireImage(hero.image);
+---
+
+<section
+  id="hero"
+  class="relative overflow-x-clip bg-white bg-[radial-gradient(60rem_40rem_at_85%_-10%,var(--color-sky-100),transparent_60%),radial-gradient(40rem_30rem_at_-10%_110%,var(--color-honey),transparent_55%)]"
+>
+  <Container class="py-12 sm:py-16 lg:py-24">
+    <div class="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+      <div class="order-2 lg:order-1">
+        <p class="font-heading text-gold-600 text-sm font-bold tracking-[0.18em] uppercase">{site.name}</p>
+        <h1
+          class="font-heading text-navy mt-4 text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl xl:text-[4.5rem]"
+        >
+          {hero.title}
+        </h1>
+        {
+          hero.quote && (
+            <figure class="border-gold mt-6 max-w-xl border-l-4 pl-4 sm:mt-8">
+              <blockquote class="text-ink/80 text-lg leading-relaxed text-pretty italic sm:text-xl">
+                “{hero.quote}”
+              </blockquote>
+              {hero.quoteAuthor && (
+                <figcaption class="font-heading text-navy mt-2 text-sm font-semibold">
+                  — {hero.quoteAuthor}
+                </figcaption>
+              )}
+            </figure>
+          )
+        }
+        <div class="mt-8 flex flex-col gap-4 sm:mt-10">
+          <div class="flex flex-wrap items-center gap-3">
+            <JoinDisclosure
+              id="hero-join-panel"
+              label={hero.ctaLabel}
+              text={join.expandedText}
+              finalLabel={join.finalCtaLabel}
+              formUrl={site.joinFormUrl}
+            />
+          </div>
+          {
+            hero.secondaryCtaLabel && (
+              <div>
+                <Button href="/#events" variant="ghost" size="lg" class="-ml-4">
+                  {hero.secondaryCtaLabel}
+                  <Icon name="arrow" class="size-5" />
+                </Button>
+              </div>
+            )
+          }
+        </div>
+      </div>
+
+      <div class="order-1 flex justify-center lg:order-2 lg:justify-end">
+        <Image
+          src={image}
+          alt={hero.imageAlt}
+          widths={[240, 360, 480, 720]}
+          sizes="(min-width: 1024px) 24rem, 11rem"
+          class="h-44 w-auto drop-shadow-[0_18px_30px_rgba(46,89,132,0.18)] sm:h-56 lg:h-[26rem] lg:max-h-[70vh]"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </Container>
+</section>

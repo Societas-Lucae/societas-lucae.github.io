@@ -1,0 +1,109 @@
+---
+import Button from '~/components/ui/Button.astro';
+import Icon from '~/components/ui/Icon.astro';
+
+/**
+ * "Join us" pattern requested in the brief: the first click unfolds an
+ * explanatory text, and only the final button leads to the Google Form.
+ */
+interface Props {
+  id: string;
+  label: string;
+  text: string;
+  finalLabel: string;
+  formUrl: string;
+  tone?: 'dark' | 'light';
+  size?: 'md' | 'lg';
+  align?: 'left' | 'center';
+  /** When the URL hash equals this value (e.g. "#join"), the panel opens automatically. */
+  openOnHash?: string;
+}
+const {
+  id,
+  label,
+  text,
+  finalLabel,
+  formUrl,
+  tone = 'dark',
+  size = 'lg',
+  align = 'left',
+  openOnHash,
+} = Astro.props;
+const panelText = tone === 'light' ? 'text-sky-100' : 'text-ink/80';
+const panelBg = tone === 'light' ? 'bg-white/10 ring-white/20' : 'bg-white ring-navy/10';
+---
+
+<div
+  class={`join-disclosure w-full ${align === 'center' ? 'flex flex-col items-center' : ''}`}
+  data-join
+  data-open-on-hash={openOnHash}
+>
+  <Button
+    variant={tone === 'light' ? 'gold' : 'primary'}
+    size={size}
+    aria-expanded="false"
+    aria-controls={id}
+    data-join-toggle
+  >
+    {label}
+    <Icon
+      name="chevron"
+      class="size-5 transition-transform duration-300 [[aria-expanded=true]_&]:rotate-180"
+    />
+  </Button>
+
+  <div
+    id={id}
+    class="join-panel grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none"
+    data-join-panel
+    hidden
+  >
+    <div class="min-h-0 overflow-hidden">
+      <div
+        class={`mt-4 max-w-2xl rounded-2xl p-5 text-[15px] leading-relaxed ring-1 sm:p-6 ${panelBg} ${panelText}`}
+      >
+        <p>{text}</p>
+        <div class="mt-5">
+          <Button href={formUrl} target="_blank" variant={tone === 'light' ? 'light' : 'gold'} size="md">
+            {finalLabel}
+            <Icon name="external" class="size-4" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-join]').forEach((root) => {
+    const toggle = root.querySelector<HTMLButtonElement>('[data-join-toggle]');
+    const panel = root.querySelector<HTMLElement>('[data-join-panel]');
+    if (!toggle || !panel) return;
+
+    const open = () => {
+      panel.hidden = false;
+      requestAnimationFrame(() => panel.classList.replace('grid-rows-[0fr]', 'grid-rows-[1fr]'));
+      toggle.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      panel.classList.replace('grid-rows-[1fr]', 'grid-rows-[0fr]');
+      toggle.setAttribute('aria-expanded', 'false');
+      const done = () => {
+        panel.hidden = true;
+      };
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) done();
+      else panel.addEventListener('transitionend', done, { once: true });
+    };
+
+    toggle.addEventListener('click', () => {
+      toggle.getAttribute('aria-expanded') === 'true' ? close() : open();
+    });
+
+    // Deep link support: /#join opens the panel in the "Want to join?" section.
+    if (root.dataset.openOnHash && window.location.hash === root.dataset.openOnHash) open();
+    window.addEventListener('hashchange', () => {
+      if (root.dataset.openOnHash && window.location.hash === root.dataset.openOnHash) open();
+    });
+  });
+</script>

@@ -1,0 +1,29 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/ui/Container.astro';
+
+const page = await getEntry('pages', 'privacy');
+if (!page) throw new Error('Missing src/content/pages/privacy.md');
+const { Content } = await render(page);
+const updated = page.data.updated
+  ? new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).format(page.data.updated)
+  : undefined;
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <Container size="narrow" class="py-12 sm:py-16">
+    <h1 class="font-heading text-navy text-4xl font-bold tracking-tight">{page.data.title}</h1>
+    {updated && <p class="text-muted mt-2 text-sm">Last updated on {updated}</p>}
+    <div
+      class="text-ink/85 [&_a]:text-navy [&_a]:decoration-gold [&_h2]:font-heading [&_h2]:text-navy mt-8 space-y-4 text-[17px] leading-relaxed [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-4 [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:font-bold [&_li]:ml-5 [&_li]:list-disc [&_strong]:font-semibold"
+    >
+      <Content />
+    </div>
+  </Container>
+</BaseLayout>

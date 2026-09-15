@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets';
+import { getHome } from '~/lib/content';
+import { requireImage } from '~/lib/images';
+import Container from '~/components/ui/Container.astro';
+import Section from '~/components/ui/Section.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+
+const { values } = await getHome();
+---
+
+<Section id="values" tone="cream" labelledBy="values-title">
+  <Container>
+    <SectionHeading id="values-title" title={values.title} align="center" />
+    <ul class="mt-10 grid gap-6 sm:grid-cols-3 lg:mt-14 lg:gap-8">
+      {
+        values.items.map((item) => (
+          <li class="ring-navy/5 flex flex-col items-center rounded-3xl bg-white p-8 text-center shadow-sm ring-1">
+            <Image
+              src={requireImage(item.image)}
+              alt=""
+              widths={[128, 256]}
+              sizes="7rem"
+              class="size-28 object-contain"
+              loading="lazy"
+            />
+            <h3 class="font-heading text-navy mt-4 text-2xl font-bold">{item.title}</h3>
+            <p class="text-ink/75 mt-3 text-[15px] leading-relaxed">{item.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</Section>

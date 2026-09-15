@@ -1,0 +1,41 @@
+---
+import { readFileSync, existsSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+
+/**
+ * Inline SVG flag from the `flag-icons` package (ISO 3166-1 alpha-2 codes,
+ * plus sub-divisions such as `gb-eng`). Rendered at build time, no request.
+ */
+interface Props {
+  code: string;
+  label: string;
+  class?: string;
+}
+const { code, label, class: className = 'h-6 w-8' } = Astro.props;
+
+const require = createRequire(import.meta.url);
+const flagsDir = path.join(path.dirname(require.resolve('flag-icons/package.json')), 'flags', '4x3');
+const file = path.join(flagsDir, `${code.toLowerCase()}.svg`);
+
+let svg = '';
+if (existsSync(file)) {
+  svg = readFileSync(file, 'utf8')
+    .replace(/<\?xml[^>]*>/, '')
+    .replace(/\s(width|height)="[^"]*"/g, '')
+    .replace(
+      '<svg',
+      `<svg class="${className} rounded-[3px] shadow-sm ring-1 ring-black/10" role="img" aria-label="Flag of ${label}" focusable="false"`
+    );
+} else {
+  console.warn(`[flag] Unknown country code: ${code}`);
+}
+---
+
+{
+  svg ? (
+    <Fragment set:html={svg} />
+  ) : (
+    <span class={`${className} inline-block rounded-[3px] bg-sky-200`} aria-hidden="true" />
+  )
+}

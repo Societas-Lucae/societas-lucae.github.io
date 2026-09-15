@@ -1,0 +1,32 @@
+---
+import { getHome } from '~/lib/content';
+import Container from '~/components/ui/Container.astro';
+import Icon from '~/components/ui/Icon.astro';
+import Section from '~/components/ui/Section.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+
+const { whatWeDo } = await getHome();
+---
+
+<Section id="what-we-do" labelledBy="what-we-do-title">
+  <Container>
+    <SectionHeading id="what-we-do-title" tagline={whatWeDo.tagline} title={whatWeDo.title} align="center" />
+    <!-- 1 / 2 / 4 per row, never 3 + 1 (brief, item 2) -->
+    <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:mt-14 xl:grid-cols-4">
+      {
+        whatWeDo.items.map((item, index) => (
+          <li class="group border-navy/10 hover:border-navy/20 hover:shadow-navy/5 relative flex flex-col rounded-3xl border bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-lg sm:p-7">
+            <div class="flex items-center justify-between">
+              <span class="text-navy inline-flex size-12 items-center justify-center rounded-2xl bg-sky-100">
+                <Icon name={item.icon} class="size-6" />
+              </span>
+              <span class="font-heading text-gold-600 text-sm font-bold">0{index + 1}</span>
+            </div>
+            <h3 class="font-heading text-navy mt-5 text-2xl font-bold">{item.title}</h3>
+            <p class="text-ink/75 mt-3 text-[15px] leading-relaxed">{item.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</Section>
