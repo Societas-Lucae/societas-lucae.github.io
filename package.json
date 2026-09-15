@@ -9,9 +9,12 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "predev": "node scripts/copy-admin.mjs",
     "start": "astro dev",
     "build": "astro build",
+    "prebuild": "node scripts/copy-admin.mjs",
     "preview": "astro preview",
+    "prepreview": "node scripts/copy-admin.mjs",
     "astro": "astro",
     "check": "astro check && prettier --check .",
     "format": "prettier --write ."
@@ -29,6 +32,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@sveltia/cms": "^0.213.0",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.1",

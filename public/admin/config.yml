@@ -1,0 +1,427 @@
+# Sveltia CMS configuration — admin dashboard of societaslucae.org
+# Docs: https://sveltiacms.app/en/docs
+#
+# Every change made in the admin is committed to the `main` branch of the
+# GitHub repository, which triggers a new deployment (about two minutes).
+
+backend:
+  name: github
+  repo: Societas-Lucae/societas-lucae.github.io
+  branch: main
+  commit_messages:
+    create: 'content: create {{collection}} “{{slug}}”'
+    update: 'content: update {{collection}} “{{slug}}”'
+    delete: 'content: delete {{collection}} “{{slug}}”'
+    uploadMedia: 'media: upload “{{path}}”'
+    deleteMedia: 'media: delete “{{path}}”'
+
+site_url: https://societas-lucae.github.io
+display_url: https://societas-lucae.github.io
+logo_url: https://societas-lucae.github.io/apple-touch-icon.png
+
+# Media library: images live in the source tree so Astro optimises them at build time.
+media_folder: src/assets/uploads
+public_folder: /src/assets/uploads
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 10485760 # 10 MB
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2000
+          height: 2000
+        svg:
+          optimize: true
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+output:
+  omit_empty_optional_fields: false
+  json:
+    indent_style: space
+    indent_size: 2
+
+# ---------------------------------------------------------------------------
+# Reusable field snippets
+# ---------------------------------------------------------------------------
+_icon_options: &icon_options
+  - { label: 'Graduation cap', value: graduation }
+  - { label: 'Heart', value: heart }
+  - { label: 'Globe', value: globe }
+  - { label: 'Spark', value: spark }
+  - { label: 'Flame', value: flame }
+  - { label: 'Microphone', value: microphone }
+  - { label: 'Users', value: users }
+  - { label: 'Gift', value: gift }
+  - { label: 'Screen', value: screen }
+  - { label: 'Podium', value: podium }
+  - { label: 'Flask', value: flask }
+  - { label: 'Stethoscope', value: stethoscope }
+  - { label: 'Calendar', value: calendar }
+  - { label: 'Pin', value: pin }
+  - { label: 'Clock', value: clock }
+  - { label: 'Video', value: video }
+  - { label: 'User', value: user }
+  - { label: 'Quote', value: quote }
+  - { label: 'Mail', value: mail }
+
+_link_fields: &link_fields
+  - { label: 'Label', name: label, widget: string }
+  - { label: 'Link', name: href, widget: string, hint: 'Anchor on the home page (e.g. /#events) or a full URL.' }
+
+# ---------------------------------------------------------------------------
+# Site-wide settings (one file each)
+# ---------------------------------------------------------------------------
+singletons:
+  - name: site
+    label: Site settings
+    icon: settings
+    file: src/content/settings/site.json
+    format: json
+    fields:
+      - { label: 'Site name', name: name, widget: string }
+      - { label: 'Tagline', name: tagline, widget: string }
+      - { label: 'Short description', name: shortDescription, widget: text, hint: 'Used in the footer and in structured data.' }
+      - { label: 'Contact e-mail', name: contactEmail, widget: string }
+      - { label: 'Membership form URL', name: joinFormUrl, widget: string, hint: 'The Google Form opened by the final “Join us” button.' }
+      - label: 'Flyer (PDF)'
+        name: flyer
+        widget: file
+        required: false
+        media_folder: /public/files
+        public_folder: /files
+        accept: application/pdf
+        hint: 'Linked in the footer.'
+      - label: 'Logo (landscape, SVG)'
+        name: logo
+        widget: image
+        media_folder: /src/assets/uploads/brand
+        public_folder: /src/assets/uploads/brand
+        accept: image/svg+xml
+        hint: 'Used in the header and footer.'
+      - label: 'Logo mark (cross)'
+        name: logoMark
+        widget: image
+        media_folder: /src/assets/uploads/brand
+        public_folder: /src/assets/uploads/brand
+      - label: 'Social links'
+        name: socialLinks
+        widget: list
+        summary: '{{fields.label}} — {{fields.url}}'
+        fields:
+          - label: Platform
+            name: platform
+            widget: select
+            options:
+              - { label: Instagram, value: instagram }
+              - { label: Facebook, value: facebook }
+              - { label: LinkedIn, value: linkedin }
+              - { label: YouTube, value: youtube }
+              - { label: 'X (Twitter)', value: x }
+              - { label: WhatsApp, value: whatsapp }
+              - { label: 'E-mail', value: email }
+              - { label: Website, value: website }
+          - { label: Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string }
+      - { label: 'Footer note', name: footerNote, widget: string, hint: '{year} is replaced by the current year.' }
+      - label: Analytics
+        name: analytics
+        widget: object
+        collapsed: true
+        fields:
+          - { label: 'Google Analytics ID', name: googleAnalyticsId, widget: string, required: false, hint: 'Leave empty to disable. Example: G-XXXXXXXXXX' }
+
+  - name: seo
+    label: SEO
+    icon: search
+    file: src/content/settings/seo.json
+    format: json
+    fields:
+      - { label: 'Default title', name: defaultTitle, widget: string, hint: 'Title of the home page (browser tab, search results).' }
+      - { label: 'Title template', name: titleTemplate, widget: string, hint: '%s is replaced by the page title.' }
+      - { label: 'Default description', name: defaultDescription, widget: text }
+      - { label: Keywords, name: keywords, widget: list, required: false }
+      - label: 'Social sharing image (1200×630)'
+        name: ogImage
+        widget: image
+        required: false
+        media_folder: /src/assets/uploads/brand
+        public_folder: /src/assets/uploads/brand
+      - { label: 'X / Twitter handle', name: twitterHandle, widget: string, required: false }
+      - { label: 'Google site verification', name: googleSiteVerification, widget: string, required: false }
+      - label: Robots
+        name: robots
+        widget: object
+        fields:
+          - { label: 'Allow indexing', name: index, widget: boolean, default: true }
+          - { label: 'Allow following links', name: follow, widget: boolean, default: true }
+      - label: 'Organization (structured data)'
+        name: organization
+        widget: object
+        collapsed: true
+        fields:
+          - { label: 'Legal name', name: legalName, widget: string }
+          - { label: 'Founding year', name: foundingDate, widget: string, required: false }
+          - { label: 'Parent organization', name: parentOrganization, widget: string, required: false }
+          - { label: 'Parent organization URL', name: parentOrganizationUrl, widget: string, required: false }
+
+  - name: navigation
+    label: Navigation
+    icon: menu
+    file: src/content/settings/navigation.json
+    format: json
+    fields:
+      - { label: 'Header links', name: header, widget: list, summary: '{{fields.label}}', fields: *link_fields }
+      - { label: 'Header button', name: headerCta, widget: object, required: false, fields: *link_fields }
+      - { label: 'Footer links', name: footer, widget: list, summary: '{{fields.label}}', fields: *link_fields }
+
+  - name: home
+    label: Home page
+    icon: home
+    file: src/content/settings/home.json
+    format: json
+    fields:
+      - label: Hero
+        name: hero
+        widget: object
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Quote, name: quote, widget: text, required: false }
+          - { label: 'Quote author', name: quoteAuthor, widget: string, required: false }
+          - { label: 'Main button label', name: ctaLabel, widget: string }
+          - { label: 'Secondary link label', name: secondaryCtaLabel, widget: string, required: false }
+          - { label: Image, name: image, widget: image, media_folder: /src/assets/uploads/brand, public_folder: /src/assets/uploads/brand }
+          - { label: 'Image description (alt)', name: imageAlt, widget: string, required: false }
+      - label: 'Countries ribbon'
+        name: countries
+        widget: object
+        fields:
+          - { label: Title, name: title, widget: string }
+          - label: Countries
+            name: items
+            widget: list
+            summary: '{{fields.name}} ({{fields.code}})'
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: 'Flag code', name: code, widget: string, hint: 'ISO 3166-1 alpha-2 code in lowercase (be, de, fr…). England: gb-eng, Scotland: gb-sct, Wales: gb-wls.' }
+      - label: 'Who we are'
+        name: about
+        widget: object
+        fields:
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Text, name: body, widget: markdown, hint: 'Paragraphs and links are supported.' }
+          - { label: Image, name: image, widget: image, media_folder: /src/assets/uploads/home, public_folder: /src/assets/uploads/home }
+          - { label: 'Image description (alt)', name: imageAlt, widget: string, required: false }
+          - label: Manifesto
+            name: manifesto
+            widget: list
+            required: false
+            summary: '{{fields.title}}'
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+      - label: 'Our values'
+        name: values
+        widget: object
+        fields:
+          - { label: Title, name: title, widget: string }
+          - label: Values
+            name: items
+            widget: list
+            summary: '{{fields.title}}'
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+              - { label: Illustration, name: image, widget: image, media_folder: /src/assets/uploads/home, public_folder: /src/assets/uploads/home }
+      - label: 'What we do'
+        name: whatWeDo
+        widget: object
+        fields:
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Title, name: title, widget: string }
+          - label: Items
+            name: items
+            widget: list
+            summary: '{{fields.title}}'
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Icon, name: icon, widget: select, options: *icon_options, default: spark }
+              - { label: Description, name: description, widget: text }
+      - label: 'Events section'
+        name: events
+        widget: object
+        fields:
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Intro, name: intro, widget: text, required: false }
+      - label: 'Want to join'
+        name: join
+        widget: object
+        fields:
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Text, name: text, widget: text }
+          - { label: 'Text shown after clicking “Join us”', name: expandedText, widget: text }
+          - { label: 'Button label', name: ctaLabel, widget: string }
+          - { label: 'Final button label (to the form)', name: finalCtaLabel, widget: string }
+          - { label: 'Contact button label', name: contactLabel, widget: string }
+      - label: 'Testimonials section'
+        name: testimonials
+        widget: object
+        fields:
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Title, name: title, widget: string }
+      - label: 'How you can help'
+        name: help
+        widget: object
+        fields:
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Image, name: image, widget: image, media_folder: /src/assets/uploads/home, public_folder: /src/assets/uploads/home }
+          - { label: 'Image description (alt)', name: imageAlt, widget: string, required: false }
+          - label: Items
+            name: items
+            widget: list
+            summary: '{{fields.title}}'
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Icon, name: icon, widget: select, options: *icon_options, default: spark }
+              - { label: Description, name: description, widget: text, hint: 'An e-mail address becomes a link automatically.' }
+          - { label: 'Contact line', name: contactLine, widget: string, required: false, hint: 'Shown before the contact e-mail, e.g. “Contact us at”.' }
+
+# ---------------------------------------------------------------------------
+# Collections (many entries)
+# ---------------------------------------------------------------------------
+collections:
+  - name: events
+    label: Events
+    label_singular: Event
+    icon: event
+    folder: src/content/events
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    slug: '{{startDate}}-{{slug}}'
+    identifier_field: title
+    summary: '{{startDate}} · {{title}}'
+    thumbnail: image
+    sortable_fields:
+      fields: [startDate, title]
+      default: { field: startDate, direction: descending }
+    view_groups:
+      - { label: Category, field: category }
+    view_filters:
+      - { label: Featured, field: featured, pattern: true }
+      - { label: Drafts, field: draft, pattern: true }
+    media_folder: /src/assets/uploads/events
+    public_folder: /src/assets/uploads/events
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Category
+        name: category
+        widget: relation
+        collection: eventCategories
+        value_field: '{{slug}}'
+        display_fields: ['{{title}}']
+        search_fields: [title]
+      - { label: 'Start date', name: startDate, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true }
+      - { label: 'End date', name: endDate, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true, required: false, hint: 'Leave empty for a one-day event.' }
+      - { label: Time, name: time, widget: string, required: false, hint: 'Free text, e.g. “20:30 CET”.' }
+      - { label: Location, name: location, widget: string, required: false, hint: 'City and country, or “Online”.' }
+      - { label: 'Online event', name: online, widget: boolean, default: false }
+      - label: Speakers
+        name: speakers
+        widget: list
+        required: false
+        summary: '{{fields.name}}'
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Role, name: role, widget: string, required: false }
+      - { label: Summary, name: summary, widget: text, hint: 'Two or three sentences shown on the card.' }
+      - { label: 'Flyer / cover image', name: image, widget: image, required: false, hint: 'Portrait format works best (flyer).' }
+      - { label: 'Gallery (photos, flyers)', name: gallery, widget: image, multiple: true, required: false }
+      - label: Links
+        name: links
+        widget: list
+        required: false
+        summary: '{{fields.label}}'
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string }
+          - { label: 'Main button (highlighted)', name: primary, widget: boolean, default: false, required: false }
+      - { label: Featured, name: featured, widget: boolean, default: false, required: false }
+      - { label: Draft (hidden on the site), name: draft, widget: boolean, default: false, required: false }
+      - { label: 'Details', name: body, widget: markdown, required: false, hint: 'Longer description shown in the event details.' }
+
+  - name: eventCategories
+    label: Event categories
+    label_singular: Event category
+    icon: category
+    folder: src/content/event-categories
+    extension: json
+    format: json
+    create: true
+    delete: true
+    identifier_field: title
+    summary: '{{order}} · {{title}}'
+    sortable_fields:
+      fields: [order, title]
+      default: { field: order, direction: ascending }
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Subtitle, name: subtitle, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: 'Text when nothing is planned', name: upcomingNote, widget: string, required: false }
+      - { label: 'Label of the past events list', name: pastLabel, widget: string, default: 'Past events' }
+      - { label: Order, name: order, widget: number, value_type: int, default: 99 }
+      - { label: Icon, name: icon, widget: select, options: *icon_options, default: calendar }
+
+  - name: testimonials
+    label: Testimonials
+    label_singular: Testimonial
+    icon: format_quote
+    folder: src/content/testimonials
+    extension: json
+    format: json
+    create: true
+    delete: true
+    identifier_field: name
+    summary: '{{order}} · {{name}}'
+    sortable_fields:
+      fields: [order, name]
+      default: { field: order, direction: ascending }
+    media_folder: /src/assets/uploads/testimonials
+    public_folder: /src/assets/uploads/testimonials
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Role, name: role, widget: string, required: false }
+      - { label: Country, name: country, widget: string, required: false }
+      - { label: Quote, name: quote, widget: text }
+      - { label: Photo, name: image, widget: image, required: false }
+      - { label: Published, name: published, widget: boolean, default: true }
+      - { label: Order, name: order, widget: number, value_type: int, default: 99 }
+
+  - name: pages
+    label: Pages
+    label_singular: Page
+    icon: article
+    folder: src/content/pages
+    extension: md
+    format: frontmatter
+    create: false
+    delete: false
+    identifier_field: title
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: string, required: false }
+      - { label: 'Last updated', name: updated, widget: datetime, format: 'YYYY-MM-DD', date_format: 'YYYY-MM-DD', time_format: false, picker_utc: true, required: false }
+      - { label: Content, name: body, widget: markdown }
