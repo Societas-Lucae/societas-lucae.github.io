@@ -4,7 +4,6 @@ Official website of [Societas Lucae](https://societaslucae.org), the internation
 doctors and medical students, youth outreach of [FIAMC](https://www.fiamc.org/).
 
 - **Production:** https://societaslucae.org (Netlify, built from `main` with the `SITE_URL` environment variable set to `https://societaslucae.org`)
-- **Test site:** https://societas-lucae.github.io (GitHub Pages, deployed from `main`)
 - **Admin dashboard:** https://societaslucae.org/admin/ — see [docs/ADMIN.md](docs/ADMIN.md)
 - **Work log:** every change is tracked in the [issues](../../issues) (labels: setup, design, content, feature, admin, seo, deploy, assets, responsive, docs, bug)
 
@@ -18,7 +17,7 @@ doctors and medical students, youth outreach of [FIAMC](https://www.fiamc.org/).
 | Content    | Astro content collections: JSON singletons + Markdown events in `src/content/`           |
 | Images     | Media library in `src/assets/uploads/`, optimised at build time by `astro:assets`        |
 | Admin      | [Sveltia CMS](https://sveltiacms.app) at `/admin`, GitHub backend, config in `public/admin/config.yml` |
-| Deployment | Netlify (production, societaslucae.org) and GitHub Actions → GitHub Pages (test site)   |
+| Deployment | Netlify, built from `main` (deploy previews on pull requests)                            |
 
 ## Local development
 
@@ -55,23 +54,11 @@ the live site silently.
 
 ## Deployment
 
-Production is built by Netlify from `main` (deploy previews on pull requests). The `SITE_URL` environment
-variable must be set to `https://societaslucae.org` there so canonical URLs, the sitemap and social sharing links
-use the production domain.
+Production is built by Netlify from `main`, with a deploy preview for every pull request. The `SITE_URL`
+environment variable is set to `https://societaslucae.org` in Netlify so canonical URLs, the sitemap and social
+sharing links use the production domain. Pull requests also run `.github/workflows/ci.yml` (check + build).
 
-Every push to `main` also runs `.github/workflows/deploy.yml`: `npm ci`, `npm run build`, upload of `dist/` and
-deployment to GitHub Pages. Pull requests run `.github/workflows/ci.yml` (check + build).
-
-### Switching to the custom domain societaslucae.org
-
-1. In the repository settings → *Pages* → *Custom domain*, enter `societaslucae.org` and enable *Enforce HTTPS*
-   (GitHub creates the `CNAME` file; keep it committed at `public/CNAME` so builds preserve it).
-2. At the DNS provider: `A` records for the apex pointing to GitHub Pages IPs
-   (185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153) and a `CNAME` for `www` to
-   `societas-lucae.github.io`.
-3. In *Settings → Secrets and variables → Actions → Variables*, add `SITE_URL = https://societaslucae.org`
-   so canonical URLs, the sitemap and social sharing links use the production domain.
-4. Update `site_url`, `display_url` and `logo_url` in `public/admin/config.yml`.
+GitHub Pages is disabled on this repository (it used to host a test copy at societas-lucae.github.io).
 
 ## Content model
 
