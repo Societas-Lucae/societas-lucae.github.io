@@ -14,7 +14,6 @@ gallery:
   - /src/assets/uploads/events/lucae-lab-2025/round-table.jpg
   - /src/assets/uploads/events/lucae-lab-2025/walk.jpg
   - /src/assets/uploads/events/lucae-lab-2025/forest-walk.jpg
-  - /src/assets/uploads/events/lucae-lab-2025/cooking.jpg
   - /src/assets/uploads/events/lucae-lab-2025/save-the-date.jpg
   - /src/assets/uploads/events/lucae-lab-2025/good-to-know.jpg
 links: []
