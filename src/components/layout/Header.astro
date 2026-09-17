@@ -1,5 +1,5 @@
 ---
-import { getNavigation, getSite } from '~/lib/content';
+import { getNavigation, getSite, getVisibleLinks } from '~/lib/content';
 import Button from '~/components/ui/Button.astro';
 import Container from '~/components/ui/Container.astro';
 import Icon from '~/components/ui/Icon.astro';
@@ -7,6 +7,7 @@ import Logo from '~/components/layout/Logo.astro';
 
 const nav = await getNavigation();
 const site = await getSite();
+const headerLinks = await getVisibleLinks(nav.header);
 ---
 
 <header
@@ -25,7 +26,7 @@ const site = await getSite();
 
       <nav aria-label="Main" class="hidden items-center gap-1 lg:flex">
         {
-          nav.header.map((item) => (
+          headerLinks.map((item) => (
             <a
               href={item.href}
               class="font-heading text-navy rounded-full px-4 py-2 text-[15px] font-semibold transition hover:bg-sky-100"
@@ -60,7 +61,7 @@ const site = await getSite();
     <Container class="py-3">
       <nav aria-label="Main (mobile)" class="flex flex-col gap-1">
         {
-          nav.header.map((item) => (
+          headerLinks.map((item) => (
             <a
               href={item.href}
               class="font-heading text-navy rounded-xl px-4 py-3 text-lg font-semibold hover:bg-sky-100"
