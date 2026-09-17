@@ -58,7 +58,8 @@ Production is built by Netlify from `main`, with a deploy preview for every pull
 environment variable is set to `https://societaslucae.org` in Netlify so canonical URLs, the sitemap and social
 sharing links use the production domain. Pull requests also run `.github/workflows/ci.yml` (check + build).
 
-GitHub Pages is disabled on this repository (it used to host a test copy at societas-lucae.github.io).
+GitHub Pages cannot be switched off on a repository named `<org>.github.io`, so societas-lucae.github.io only serves
+a non-indexable redirect to the production domain (`pages-redirect/`, deployed by `.github/workflows/pages-redirect.yml`).
 
 ## Content model
 
