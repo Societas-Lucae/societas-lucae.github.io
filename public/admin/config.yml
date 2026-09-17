@@ -15,9 +15,9 @@ backend:
     uploadMedia: 'media: upload “{{path}}”'
     deleteMedia: 'media: delete “{{path}}”'
 
-site_url: https://societas-lucae.github.io
-display_url: https://societas-lucae.github.io
-logo_url: https://societas-lucae.github.io/apple-touch-icon.png
+site_url: https://societaslucae.org
+display_url: https://societaslucae.org
+logo_url: https://societaslucae.org/apple-touch-icon.png
 
 # Media library: images live in the source tree so Astro optimises them at build time.
 media_folder: src/assets/uploads
