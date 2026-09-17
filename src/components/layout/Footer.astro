@@ -1,11 +1,12 @@
 ---
-import { getNavigation, getSite } from '~/lib/content';
+import { getNavigation, getSite, getVisibleLinks } from '~/lib/content';
 import Container from '~/components/ui/Container.astro';
 import Icon from '~/components/ui/Icon.astro';
 import Logo from '~/components/layout/Logo.astro';
 
 const site = await getSite();
 const nav = await getNavigation();
+const footerLinks = await getVisibleLinks(nav.footer);
 const year = new Date().getFullYear();
 const footNote = site.footerNote.replace('{year}', String(year));
 ---
@@ -22,7 +23,7 @@ const footNote = site.footerNote.replace('{year}', String(year));
         <h2 class="font-heading text-navy text-sm font-bold tracking-[0.18em] uppercase">Navigate</h2>
         <ul class="mt-3 grid gap-1 sm:mt-4 sm:gap-2">
           {
-            nav.footer.map((item) => (
+            footerLinks.map((item) => (
               <li>
                 <a
                   href={item.href}

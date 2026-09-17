@@ -407,7 +407,7 @@ collections:
       - { label: Country, name: country, widget: string, required: false }
       - { label: Quote, name: quote, widget: text }
       - { label: Photo, name: image, widget: image, required: false }
-      - { label: Published, name: published, widget: boolean, default: true }
+      - { label: 'Shown on the site', name: published, widget: boolean, default: false, hint: 'Switch off to hide this testimonial without deleting it. The whole section disappears when none is shown.' }
       - { label: Order, name: order, widget: number, value_type: int, default: 99 }
 
   - name: pages

@@ -31,7 +31,7 @@ You need a GitHub account with **write access** to the repository `Societas-Luca
 | **Navigation**       | Links of the header and footer                                                                |
 | **Events**           | One entry per event, with category, dates, location, speakers, flyer, gallery and links       |
 | **Event categories** | The four groups of the Events section (online conferences, congresses, Lucae Lab, hands-on)   |
-| **Testimonials**     | Quotes shown in the "In their own words" section (unpublish one with the *Published* switch)  |
+| **Testimonials**     | Quotes of the "In their own words" section. Each one has a *Shown on the site* switch: off hides it without deleting it, and the section disappears when none is shown |
 | **Pages**            | The privacy page                                                                              |
 | **Assets**           | The media library: browse, upload, rename and delete images                                   |
 

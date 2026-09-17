@@ -37,6 +37,15 @@ export async function getPublishedTestimonials() {
   return testimonials.sort((a, b) => a.data.order - b.data.order);
 }
 
+/**
+ * Drops navigation links that point to a section which is not rendered
+ * (today: `#testimonials` when no testimonial is shown on the site).
+ */
+export async function getVisibleLinks<T extends { href: string }>(links: T[]): Promise<T[]> {
+  const hasTestimonials = (await getPublishedTestimonials()).length > 0;
+  return links.filter((link) => hasTestimonials || !/#testimonials$/.test(link.href));
+}
+
 const monthDay = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' });
 const full = new Intl.DateTimeFormat('en-GB', {
   day: 'numeric',
