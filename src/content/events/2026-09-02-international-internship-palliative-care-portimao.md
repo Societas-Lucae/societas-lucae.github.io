@@ -14,7 +14,6 @@ gallery:
   - /src/assets/uploads/events/palliative-care-portugal-2026/hospital.jpg
   - /src/assets/uploads/events/palliative-care-portugal-2026/class.jpg
   - /src/assets/uploads/events/palliative-care-portugal-2026/care-with-hope.jpg
-  - /src/assets/uploads/events/palliative-care-portugal-2026/group.jpg
   - /src/assets/uploads/events/palliative-care-portugal-2026/boat-trip.jpg
 links: []
 featured: false
