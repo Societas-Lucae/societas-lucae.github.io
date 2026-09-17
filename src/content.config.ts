@@ -54,6 +54,20 @@ const site = defineCollection({
         googleAnalyticsId: z.string().optional(),
       })
       .optional(),
+    cookieBanner: z
+      .object({
+        title: z.string().default('Cookies for audience measurement'),
+        text: z
+          .string()
+          .default(
+            'We would like to use Google Analytics to understand how this site is used. Nothing is loaded before you accept, and you can change your choice at any time.'
+          ),
+        linkLabel: z.string().default('Privacy and cookies'),
+        acceptLabel: z.string().default('Accept'),
+        declineLabel: z.string().default('Decline'),
+        settingsLabel: z.string().default('Cookie settings'),
+      })
+      .default({}),
   }),
 });
 

@@ -136,7 +136,18 @@ singletons:
         widget: object
         collapsed: true
         fields:
-          - { label: 'Google Analytics ID', name: googleAnalyticsId, widget: string, required: false, hint: 'Leave empty to disable. Example: G-XXXXXXXXXX' }
+          - { label: 'Google Analytics ID', name: googleAnalyticsId, widget: string, required: false, hint: 'Leave empty to disable analytics and the cookie banner. Example: G-XXXXXXXXXX' }
+      - label: 'Cookie banner'
+        name: cookieBanner
+        widget: object
+        collapsed: true
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Text, name: text, widget: text }
+          - { label: 'Privacy link label', name: linkLabel, widget: string }
+          - { label: 'Accept button', name: acceptLabel, widget: string }
+          - { label: 'Decline button', name: declineLabel, widget: string }
+          - { label: 'Footer link (reopen the banner)', name: settingsLabel, widget: string }
 
   - name: seo
     label: SEO

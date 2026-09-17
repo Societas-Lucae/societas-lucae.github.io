@@ -1,0 +1,143 @@
+---
+import { getSite } from '~/lib/content';
+import Icon from '~/components/ui/Icon.astro';
+
+/**
+ * Minimal cookie consent for Google Analytics (EU ePrivacy / GDPR):
+ * - nothing is loaded before the visitor accepts;
+ * - "Decline" is as easy as "Accept";
+ * - the choice is stored in localStorage (no cookie) and can be changed
+ *   at any time from the "Cookie settings" link in the footer;
+ * - Google Consent Mode v2 signals are sent with the gtag configuration.
+ * Rendered only when a Google Analytics id is set in the site settings.
+ */
+const site = await getSite();
+const gaId = site.analytics?.googleAnalyticsId?.trim();
+const banner = site.cookieBanner;
+---
+
+{
+  gaId && (
+    <div
+      id="cookie-consent"
+      role="region"
+      aria-label="Cookie consent"
+      class="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-4"
+      data-consent
+      data-ga-id={gaId}
+      hidden
+    >
+      <div class="border-navy/10 shadow-navy/20 relative mx-auto flex max-w-3xl flex-col gap-4 rounded-2xl border bg-white p-5 shadow-2xl sm:flex-row sm:items-center sm:gap-6">
+        <div class="flex-1">
+          <p class="font-heading text-navy font-bold">{banner.title}</p>
+          <p class="text-ink/75 mt-1 text-sm leading-relaxed">
+            {banner.text}{' '}
+            <a href="/privacy" class="text-navy decoration-gold font-semibold underline underline-offset-4">
+              {banner.linkLabel}
+            </a>
+          </p>
+        </div>
+        <div class="flex shrink-0 flex-col gap-2 sm:flex-row">
+          <button
+            type="button"
+            class="font-heading text-navy ring-navy/20 inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 text-[15px] font-semibold ring-1 ring-inset hover:bg-sky-50"
+            data-consent-decline
+          >
+            {banner.declineLabel}
+          </button>
+          <button
+            type="button"
+            class="bg-navy font-heading hover:bg-navy-900 inline-flex min-h-11 items-center justify-center rounded-full px-5 text-[15px] font-semibold text-white"
+            data-consent-accept
+          >
+            {banner.acceptLabel}
+          </button>
+        </div>
+        <button
+          type="button"
+          class="text-navy absolute top-2 right-2 inline-flex size-9 items-center justify-center rounded-full hover:bg-sky-100 sm:hidden"
+          aria-label="Close"
+          data-consent-decline
+        >
+          <Icon name="close" class="size-5" />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  const KEY = 'sl-cookie-consent';
+  const root = document.getElementById('cookie-consent');
+  const gaId = root?.dataset.gaId;
+
+  if (root && gaId) {
+    let loaded = false;
+
+    const read = (): string | null => {
+      try {
+        return localStorage.getItem(KEY);
+      } catch {
+        return null;
+      }
+    };
+    const write = (value: 'granted' | 'denied') => {
+      try {
+        localStorage.setItem(KEY, value);
+      } catch {
+        /* private mode: the banner will simply show again next time */
+      }
+    };
+
+    const loadAnalytics = () => {
+      if (loaded) return;
+      loaded = true;
+      const w = window as Window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void };
+      w.dataLayer = w.dataLayer || [];
+      w.gtag = function () {
+        // eslint-disable-next-line prefer-rest-params
+        w.dataLayer!.push(arguments);
+      };
+      w.gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'granted',
+      });
+      w.gtag('js', new Date());
+      w.gtag('config', gaId, { anonymize_ip: true });
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`;
+      document.head.appendChild(script);
+    };
+
+    const show = () => {
+      root.hidden = false;
+    };
+    const hide = () => {
+      root.hidden = true;
+    };
+
+    root.querySelectorAll('[data-consent-accept]').forEach((button) =>
+      button.addEventListener('click', () => {
+        write('granted');
+        hide();
+        loadAnalytics();
+      })
+    );
+    root.querySelectorAll('[data-consent-decline]').forEach((button) =>
+      button.addEventListener('click', () => {
+        write('denied');
+        hide();
+      })
+    );
+    document
+      .querySelectorAll('[data-consent-open]')
+      .forEach((button) => button.addEventListener('click', show));
+
+    const choice = read();
+    if (choice === 'granted') loadAnalytics();
+    else if (choice !== 'denied') show();
+  }
+</script>
