@@ -4,12 +4,10 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 /**
- * Public URL of the deployed site.
- * - GitHub Pages test site: https://societas-lucae.github.io (default)
- * - Production: set SITE_URL=https://societaslucae.org in the deploy workflow
- *   once the custom domain is attached to the repository.
+ * Public URL of the deployed site. Netlify sets SITE_URL=https://societaslucae.org;
+ * local builds and pull-request previews fall back to the production URL as well.
  */
-const site = process.env.SITE_URL || 'https://societas-lucae.github.io';
+const site = process.env.SITE_URL || 'https://societaslucae.org';
 
 export default defineConfig({
   site,
