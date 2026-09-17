@@ -88,7 +88,23 @@ const footNote = site.footerNote.replace('{year}', String(year));
     <div
       class="border-navy/10 text-muted mt-10 flex flex-col gap-2 border-t pt-6 text-sm sm:flex-row sm:items-center sm:justify-between"
     >
-      <p>{footNote}</p>
+      <p>
+        {footNote}
+        {
+          site.analytics?.googleAnalyticsId && (
+            <>
+              {' · '}
+              <button
+                type="button"
+                class="decoration-gold hover:text-navy underline underline-offset-4"
+                data-consent-open
+              >
+                {site.cookieBanner.settingsLabel}
+              </button>
+            </>
+          )
+        }
+      </p>
       <p>
         Website by <a
           href="https://orqeo.com"

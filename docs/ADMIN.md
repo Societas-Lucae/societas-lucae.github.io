@@ -26,7 +26,7 @@ You need a GitHub account with **write access** to the repository `Societas-Luca
 | Menu entry           | What it controls                                                                              |
 | -------------------- | --------------------------------------------------------------------------------------------- |
 | **Home page**        | Every text and image of the one-page site, section by section (hero, countries, about, values, what we do, join, help…) |
-| **Site settings**    | Name, contact e-mail, membership form link, flyer PDF, logo, social links, footer note, Google Analytics id |
+| **Site settings**    | Name, contact e-mail, membership form link, flyer PDF, logo, social links, footer note, Google Analytics id and cookie banner texts (analytics is loaded only after the visitor accepts the banner) |
 | **SEO**              | Page title and description shown by Google and social networks, sharing image, keywords        |
 | **Navigation**       | Links of the header and footer                                                                |
 | **Events**           | One entry per event, with category, dates, location, speakers, flyer, gallery and links       |

@@ -8,11 +8,27 @@
   "logo": "/src/assets/uploads/brand/logo-landscape.svg",
   "logoMark": "/src/assets/uploads/brand/logo-cross.png",
   "socialLinks": [
-    { "platform": "instagram", "label": "Instagram", "url": "https://www.instagram.com/societas.lucae/" },
-    { "platform": "email", "label": "E-mail", "url": "mailto:societas.lucae@gmail.com" }
+    {
+      "platform": "instagram",
+      "label": "Instagram",
+      "url": "https://www.instagram.com/societas.lucae/"
+    },
+    {
+      "platform": "email",
+      "label": "E-mail",
+      "url": "mailto:societas.lucae@gmail.com"
+    }
   ],
   "footerNote": "© {year} Societas Lucae. All rights reserved.",
   "analytics": {
-    "googleAnalyticsId": ""
+    "googleAnalyticsId": "G-JGLSNCBVMC"
+  },
+  "cookieBanner": {
+    "title": "Cookies for audience measurement",
+    "text": "We would like to use Google Analytics to understand how this site is used. Nothing is loaded before you accept, and you can change your choice at any time.",
+    "linkLabel": "Privacy and cookies",
+    "acceptLabel": "Accept",
+    "declineLabel": "Decline",
+    "settingsLabel": "Cookie settings"
   }
 }

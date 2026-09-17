@@ -1,5 +1,15 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob, file } from 'astro/loaders';
+import { z } from 'astro/zod';
+
+const cookieBannerDefaults = {
+  title: 'Cookies for audience measurement',
+  text: 'We would like to use Google Analytics to understand how this site is used. Nothing is loaded before you accept, and you can change your choice at any time.',
+  linkLabel: 'Privacy and cookies',
+  acceptLabel: 'Accept',
+  declineLabel: 'Decline',
+  settingsLabel: 'Cookie settings',
+};
 
 /**
  * Image references are stored as project paths (e.g. `/src/assets/uploads/home/photo.jpg`)
@@ -54,6 +64,16 @@ const site = defineCollection({
         googleAnalyticsId: z.string().optional(),
       })
       .optional(),
+    cookieBanner: z
+      .object({
+        title: z.string(),
+        text: z.string(),
+        linkLabel: z.string(),
+        acceptLabel: z.string(),
+        declineLabel: z.string(),
+        settingsLabel: z.string(),
+      })
+      .default(cookieBannerDefaults),
   }),
 });
 
