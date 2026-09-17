@@ -28,7 +28,9 @@ const {
 
 const pageTitle = title ? (rawTitle ? title : seo.titleTemplate.replace('%s', title)) : seo.defaultTitle;
 const pageDescription = description ?? seo.defaultDescription;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+// build.format is 'file': strip the .html suffix so canonical URLs match the clean URLs used in links and sitemap.
+const cleanPath = Astro.url.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+const canonical = new URL(cleanPath, Astro.site);
 
 const ogSource = resolveImage(image || seo.ogImage || '');
 const ogImage = ogSource
