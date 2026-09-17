@@ -1,9 +1,9 @@
 # Editing the website — admin guide
 
-The site has an admin dashboard at **`/admin`** (for example https://societas-lucae.github.io/admin/).
+The site has an admin dashboard at **https://societaslucae.org/admin/**.
 It is built with [Sveltia CMS](https://sveltiacms.app/) and edits the files of this GitHub repository directly:
 every change you save becomes a commit on the `main` branch and the site is rebuilt and published
-automatically in about two minutes.
+automatically in about two minutes (production on Netlify, test site on GitHub Pages).
 
 ## 1. Signing in
 

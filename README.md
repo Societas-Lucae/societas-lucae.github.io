@@ -3,8 +3,9 @@
 Official website of [Societas Lucae](https://societaslucae.org), the international network of young Catholic
 doctors and medical students, youth outreach of [FIAMC](https://www.fiamc.org/).
 
-- **Test site:** https://societas-lucae.github.io (deployed from `main`)
-- **Admin dashboard:** https://societas-lucae.github.io/admin/ — see [docs/ADMIN.md](docs/ADMIN.md)
+- **Production:** https://societaslucae.org (Netlify, built from `main` with the `SITE_URL` environment variable set to `https://societaslucae.org`)
+- **Test site:** https://societas-lucae.github.io (GitHub Pages, deployed from `main`)
+- **Admin dashboard:** https://societaslucae.org/admin/ — see [docs/ADMIN.md](docs/ADMIN.md)
 - **Work log:** every change is tracked in the [issues](../../issues) (labels: setup, design, content, feature, admin, seo, deploy, assets, responsive, docs, bug)
 
 ## Stack
@@ -17,7 +18,7 @@ doctors and medical students, youth outreach of [FIAMC](https://www.fiamc.org/).
 | Content    | Astro content collections: JSON singletons + Markdown events in `src/content/`           |
 | Images     | Media library in `src/assets/uploads/`, optimised at build time by `astro:assets`        |
 | Admin      | [Sveltia CMS](https://sveltiacms.app) at `/admin`, GitHub backend, config in `public/admin/config.yml` |
-| Deployment | GitHub Actions → GitHub Pages (`.github/workflows/deploy.yml`)                           |
+| Deployment | Netlify (production, societaslucae.org) and GitHub Actions → GitHub Pages (test site)   |
 
 ## Local development
 
@@ -54,7 +55,11 @@ the live site silently.
 
 ## Deployment
 
-Every push to `main` runs `.github/workflows/deploy.yml`: `npm ci`, `npm run build`, upload of `dist/` and
+Production is built by Netlify from `main` (deploy previews on pull requests). The `SITE_URL` environment
+variable must be set to `https://societaslucae.org` there so canonical URLs, the sitemap and social sharing links
+use the production domain.
+
+Every push to `main` also runs `.github/workflows/deploy.yml`: `npm ci`, `npm run build`, upload of `dist/` and
 deployment to GitHub Pages. Pull requests run `.github/workflows/ci.yml` (check + build).
 
 ### Switching to the custom domain societaslucae.org
