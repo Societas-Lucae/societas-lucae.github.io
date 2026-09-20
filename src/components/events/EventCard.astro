@@ -69,7 +69,7 @@ const dialogId = `event-${event.id}`;
       data-event-open={dialogId}
       class="group border-navy/10 hover:border-navy/20 hover:shadow-navy/10 flex flex-col overflow-hidden rounded-2xl border bg-white transition hover:-translate-y-0.5 hover:shadow-lg"
     >
-      <div class="aspect-[4/5] w-full overflow-hidden bg-sky-50">
+      <div class="relative aspect-[4/5] w-full overflow-hidden bg-sky-50">
         {cover ? (
           <Image
             src={cover}
@@ -84,6 +84,12 @@ const dialogId = `event-${event.id}`;
             <Icon name="calendar" class="size-10" />
           </div>
         )}
+        <span
+          class="text-navy absolute top-2 right-2 inline-flex size-8 items-center justify-center rounded-full bg-white/85 shadow-sm backdrop-blur-sm transition group-hover:bg-white"
+          aria-hidden="true"
+        >
+          <Icon name="arrow" class="size-4 transition group-hover:translate-x-0.5" />
+        </span>
       </div>
       <div class="flex flex-1 flex-col p-4">
         <p class="text-ink/60 text-xs font-semibold tracking-wide uppercase">{formatEventDates(event)}</p>
@@ -91,6 +97,10 @@ const dialogId = `event-${event.id}`;
           {data.title}
         </h4>
         {data.location && <p class="text-ink/60 mt-1 line-clamp-1 text-xs">{data.location}</p>}
+        <span class="font-heading text-navy mt-3 inline-flex items-center gap-1 pt-1 text-xs font-semibold">
+          See details
+          <Icon name="arrow" class="size-3.5 transition group-hover:translate-x-0.5" />
+        </span>
       </div>
     </a>
   )
