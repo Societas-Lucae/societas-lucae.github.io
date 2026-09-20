@@ -413,7 +413,7 @@ collections:
     media_folder: /src/assets/uploads/testimonials
     public_folder: /src/assets/uploads/testimonials
     fields:
-      - { label: Name, name: name, widget: string }
+      - { label: Name, name: name, widget: string, required: false, hint: 'Leave empty for an anonymous quote (no author line is shown).' }
       - { label: Role, name: role, widget: string, required: false }
       - { label: Country, name: country, widget: string, required: false }
       - { label: Quote, name: quote, widget: text }

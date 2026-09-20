@@ -205,7 +205,7 @@ const events = defineCollection({
 const testimonials = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/content/testimonials' }),
   schema: z.object({
-    name: z.string(),
+    name: z.string().optional(),
     role: z.string().optional(),
     country: z.string().optional(),
     quote: z.string(),
