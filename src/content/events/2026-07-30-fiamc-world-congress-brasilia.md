@@ -8,17 +8,7 @@ online: false
 speakers: []
 summary: "The World Congress of Catholic Doctors: the mission of the Catholic doctor in the light of the Social Doctrine of the Church, from the industrial revolution to the digital revolution."
 image: /src/assets/uploads/events/fiamc-world-congress-2026/flyer.jpg
-gallery:
-  - /src/assets/uploads/events/fiamc-world-congress-2026/flyer-notebook.jpg
-  - /src/assets/uploads/events/fiamc-world-congress-2026/program-cover.jpg
-  - /src/assets/uploads/events/fiamc-world-congress-2026/program-1.jpg
-  - /src/assets/uploads/events/fiamc-world-congress-2026/program-2.jpg
-  - /src/assets/uploads/events/fiamc-world-congress-2026/program-3.jpg
-  - /src/assets/uploads/events/fiamc-world-congress-2026/program-4.jpg
-  - /src/assets/uploads/events/fiamc-world-congress-2026/program-5.jpg
-  - /src/assets/uploads/events/fiamc-world-congress-2026/program-6.jpg
-  - /src/assets/uploads/events/fiamc-world-congress-2026/program-7.jpg
-  - /src/assets/uploads/events/fiamc-world-congress-2026/program-8.jpg
+gallery: []
 links: []
 featured: false
 ---
