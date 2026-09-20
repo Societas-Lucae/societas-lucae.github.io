@@ -25,7 +25,7 @@ const dialogId = `event-${event.id}`;
     <a
       href={href}
       data-event-open={dialogId}
-      class="group border-gold/40 ring-honey/50 hover:shadow-navy/10 grid gap-5 rounded-3xl border bg-white p-5 shadow-sm ring-4 transition hover:-translate-y-0.5 hover:shadow-lg sm:grid-cols-[9rem_1fr] sm:p-6"
+      class="group border-gold/40 ring-honey/50 hover:shadow-navy/10 grid gap-5 rounded-none border bg-white p-5 shadow-sm ring-4 transition hover:-translate-y-0.5 hover:shadow-lg sm:grid-cols-[9rem_1fr] sm:p-6"
     >
       {cover && (
         <Image
@@ -33,10 +33,7 @@ const dialogId = `event-${event.id}`;
           alt=""
           widths={[288, 432]}
           sizes="9rem"
-          class:list={[
-            'aspect-[4/5] w-full object-cover sm:w-36',
-            data.coverSquareCorners ? 'rounded-none' : 'rounded-2xl',
-          ]}
+          class="aspect-[4/5] w-full object-cover sm:w-36"
           loading="lazy"
         />
       )}
@@ -70,7 +67,7 @@ const dialogId = `event-${event.id}`;
     <a
       href={href}
       data-event-open={dialogId}
-      class="group border-navy/10 hover:border-navy/20 hover:shadow-navy/10 flex flex-col overflow-hidden rounded-2xl border bg-white transition hover:-translate-y-0.5 hover:shadow-lg"
+      class="group border-navy/10 hover:border-navy/20 hover:shadow-navy/10 flex flex-col overflow-hidden rounded-none border bg-white transition hover:-translate-y-0.5 hover:shadow-lg"
     >
       <div class="relative aspect-[4/5] w-full overflow-hidden bg-sky-50">
         {cover ? (
