@@ -43,7 +43,7 @@
     "title": "A network of young Catholic doctors and medical students",
     "body": "As believers engaged in medicine, we feel blessed with a unique calling. This is why we greatly appreciate the chance to exchange with others who understand what it means, for they live it too. This desire was the driving force behind the launch of Societas Lucae.\n\nSince January 2025, Societas Lucae is recognized as the youth outreach of [FIAMC](https://www.fiamc.org/), the official federation of national medical associations of the Catholic Church.\n\nUnited by our faith, our vocation and the desire to place our life and work in God's hands, we see friendship as a foundation to build a better world on.",
     "image": "/src/assets/uploads/home/who-we-are.jpg",
-    "imageAlt": "Young doctors and medical students sitting in a circle under pine trees",
+    "imageAlt": "Members of Societas Lucae together in Portugal, one forming a heart with her hands",
     "manifesto": [
       {
         "title": "We believe Christ is in each patient.",
@@ -65,17 +65,17 @@
       {
         "title": "Care",
         "description": "We foster a shared commitment to become skilled, dedicated and caring physicians.",
-        "image": "/src/assets/uploads/home/value-care.png"
+        "image": "/src/assets/uploads/home/value-care.jpg"
       },
       {
         "title": "Prayer",
         "description": "“Pray without ceasing”, said St Paul. By genuinely loving our patients and peers, we seek to live out that call.",
-        "image": "/src/assets/uploads/home/value-prayer.png"
+        "image": "/src/assets/uploads/home/value-prayer.jpg"
       },
       {
         "title": "Together",
         "description": "Friendship is the spark that got us going as well as the fire which keeps us moving.",
-        "image": "/src/assets/uploads/home/value-together.png"
+        "image": "/src/assets/uploads/home/value-together.jpg"
       }
     ]
   },
