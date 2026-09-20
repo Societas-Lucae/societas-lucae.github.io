@@ -10,8 +10,8 @@ speakers:
     role: "Professor at UCLouvain, de Duve Institute (Belgium)"
 summary: "What it means to be a faithful scientist in today's world, followed by interactive breakout rooms."
 image: /src/assets/uploads/events/online-conferences/2026-02-24-faithful-scientist.jpg
-gallery:
-  - /src/assets/uploads/events/online-conferences/2026-02-24-faithful-scientist-speaker.jpg
+coverSquareCorners: true
+gallery: []
 links: []
 featured: false
 ---

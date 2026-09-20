@@ -193,6 +193,8 @@ const events = defineCollection({
     speakers: z.array(z.object({ name: z.string(), role: z.string().optional() })).default([]),
     summary: z.string(),
     image: optionalUploadPath,
+    /** Some flyers already have their own printed border; square corners keep it from being clipped. */
+    coverSquareCorners: z.boolean().default(false),
     gallery: z.array(uploadPath).default([]),
     links: z
       .array(z.object({ label: z.string(), url: z.string(), primary: z.boolean().optional() }))
@@ -205,7 +207,7 @@ const events = defineCollection({
 const testimonials = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/content/testimonials' }),
   schema: z.object({
-    name: z.string(),
+    name: z.string().optional(),
     role: z.string().optional(),
     country: z.string().optional(),
     quote: z.string(),

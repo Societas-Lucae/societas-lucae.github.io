@@ -15,17 +15,19 @@ const { values } = await getHome();
     <ul class="mt-10 grid gap-6 sm:grid-cols-3 lg:mt-14 lg:gap-8">
       {
         values.items.map((item) => (
-          <li class="ring-navy/5 flex flex-col items-center rounded-3xl bg-white p-8 text-center shadow-sm ring-1">
+          <li class="ring-navy/5 flex flex-col overflow-hidden rounded-3xl bg-white text-center shadow-sm ring-1">
             <Image
               src={requireImage(item.image)}
               alt=""
-              widths={[128, 256]}
-              sizes="7rem"
-              class="size-28 object-contain"
+              widths={[400, 600, 800]}
+              sizes="(min-width: 640px) 30vw, 90vw"
+              class="aspect-[4/3] w-full object-cover"
               loading="lazy"
             />
-            <h3 class="font-heading text-navy mt-4 text-2xl font-bold">{item.title}</h3>
-            <p class="text-ink/75 mt-3 text-[15px] leading-relaxed">{item.description}</p>
+            <div class="flex flex-1 flex-col p-6 sm:p-7">
+              <h3 class="font-heading text-navy text-2xl font-bold">{item.title}</h3>
+              <p class="text-ink/75 mt-3 text-[15px] leading-relaxed">{item.description}</p>
+            </div>
           </li>
         ))
       }

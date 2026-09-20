@@ -10,6 +10,7 @@ speakers:
     role: "Physician and researcher"
 summary: "Insights on how our work as physicians relates to environmental issues."
 image: /src/assets/uploads/events/online-conferences/2025-12-04-environment-medicine.jpg
+coverSquareCorners: true
 gallery: []
 links: []
 featured: false

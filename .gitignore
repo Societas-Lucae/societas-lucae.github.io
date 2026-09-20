@@ -23,3 +23,6 @@ Thumbs.db
 
 # generated admin bundle (copied from node_modules at build time)
 public/admin/sveltia-cms.js
+
+# incoming feedback source material (kept out of the repo)
+docs/modifs_20260920/

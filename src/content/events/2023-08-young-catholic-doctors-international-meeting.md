@@ -8,7 +8,9 @@ online: false
 speakers: []
 summary: "The third Young Catholic Doctors International Meeting took place during World Youth Day 2023, gathering doctors and doctors-to-be from the five continents."
 image: /src/assets/uploads/events/ycd-meeting-2023/meeting.jpg
-gallery: []
+gallery:
+  - /src/assets/uploads/events/ycd-meeting-2023/welcome-message.jpg
+  - /src/assets/uploads/events/ycd-meeting-2023/audience.jpg
 links: []
 featured: false
 ---

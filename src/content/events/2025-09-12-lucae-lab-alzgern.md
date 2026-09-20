@@ -10,12 +10,13 @@ summary: "The very first Lucae Lab: a weekend filled with joy, prayer, meaningfu
 image: /src/assets/uploads/events/lucae-lab-2025/flyer.jpg
 gallery:
   - /src/assets/uploads/events/lucae-lab-2025/conference.jpg
+  - /src/assets/uploads/events/lucae-lab-2025/session.jpg
   - /src/assets/uploads/events/lucae-lab-2025/chapel.jpg
   - /src/assets/uploads/events/lucae-lab-2025/round-table.jpg
+  - /src/assets/uploads/events/lucae-lab-2025/altotting.jpg
   - /src/assets/uploads/events/lucae-lab-2025/walk.jpg
   - /src/assets/uploads/events/lucae-lab-2025/forest-walk.jpg
-  - /src/assets/uploads/events/lucae-lab-2025/save-the-date.jpg
-  - /src/assets/uploads/events/lucae-lab-2025/good-to-know.jpg
+  - /src/assets/uploads/events/lucae-lab-2025/flyer-notebook.jpg
 links: []
 featured: false
 ---

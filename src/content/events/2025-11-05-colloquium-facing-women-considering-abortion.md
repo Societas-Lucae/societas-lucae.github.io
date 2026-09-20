@@ -10,6 +10,7 @@ speakers:
     role: "1000plus"
 summary: "First edition of our new colloquium format: after a short presentation, the floor is open for a real discussion between members."
 image: /src/assets/uploads/events/online-conferences/2025-11-05-colloquium-abortion.jpg
+coverSquareCorners: true
 gallery: []
 links: []
 featured: false

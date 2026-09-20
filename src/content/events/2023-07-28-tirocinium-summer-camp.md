@@ -10,7 +10,12 @@ summary: "Our first international summer camp for medical students, four days be
 image: /src/assets/uploads/events/tirocinium-2023/flyer.jpg
 gallery:
   - /src/assets/uploads/events/tirocinium-2023/group.jpg
+  - /src/assets/uploads/events/tirocinium-2023/group-tree.jpg
   - /src/assets/uploads/events/tirocinium-2023/mass.jpg
+  - /src/assets/uploads/events/tirocinium-2023/outdoor-mass.jpg
+  - /src/assets/uploads/events/tirocinium-2023/outdoor-mass-bw.jpg
+  - /src/assets/uploads/events/tirocinium-2023/evening-circle.jpg
+  - /src/assets/uploads/events/tirocinium-2023/pallets-circle.jpg
   - /src/assets/uploads/events/tirocinium-2023/circle.jpg
   - /src/assets/uploads/events/tirocinium-2023/dates.jpg
 links: []
