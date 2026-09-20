@@ -22,6 +22,8 @@ links:
   - label: "Register now"
     url: "https://forms.gle/pyGJYUDeWnQpizVD6"
     primary: true
+  - label: "Information (PDF)"
+    url: "/files/lucae-lab-2026-info.pdf"
 featured: true
 ---
 
