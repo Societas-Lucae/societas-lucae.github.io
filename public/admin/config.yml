@@ -359,6 +359,7 @@ collections:
           - { label: Role, name: role, widget: string, required: false }
       - { label: Summary, name: summary, widget: text, hint: 'Two or three sentences shown on the card.' }
       - { label: 'Flyer / cover image', name: image, widget: image, required: false, hint: 'Portrait format works best (flyer).' }
+      - { label: 'Cover has its own frame (square corners)', name: coverSquareCorners, widget: boolean, default: false, required: false, hint: 'Tick when the flyer already has a printed border, so the site keeps square corners instead of rounding (and clipping) them.' }
       - { label: 'Gallery (photos, flyers)', name: gallery, widget: image, multiple: true, required: false }
       - label: Links
         name: links

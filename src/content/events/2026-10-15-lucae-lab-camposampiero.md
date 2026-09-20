@@ -12,6 +12,7 @@ speakers:
     role: "Physician, Christian speaker and author (Germany)"
 summary: "A unique gathering for Catholic doctors and medical students to connect, reflect and grow at the intersection of faith and medicine, in the footsteps of St Anthony."
 image: /src/assets/uploads/events/lucae-lab-2026/flyer.jpg
+coverSquareCorners: true
 gallery:
   - /src/assets/uploads/events/lucae-lab-2026/speaker-dermot-kearney.jpg
   - /src/assets/uploads/events/lucae-lab-2026/speaker-jana-highholder.jpg

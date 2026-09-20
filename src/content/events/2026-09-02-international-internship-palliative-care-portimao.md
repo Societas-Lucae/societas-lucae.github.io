@@ -10,6 +10,7 @@ speakers:
     role: "Medical Oncology and Palliative Care department, Hospital of Portimão"
 summary: "Our first international internship: a hands-on experience of clinical practice in palliative care, in a real hospital setting, with time for reflection and prayer."
 image: /src/assets/uploads/events/palliative-care-portugal-2026/flyer.jpg
+coverSquareCorners: true
 gallery:
   - /src/assets/uploads/events/palliative-care-portugal-2026/group-heart.jpg
   - /src/assets/uploads/events/palliative-care-portugal-2026/hospital.jpg

@@ -33,7 +33,10 @@ const dialogId = `event-${event.id}`;
           alt=""
           widths={[288, 432]}
           sizes="9rem"
-          class="aspect-[4/5] w-full rounded-2xl object-cover sm:w-36"
+          class:list={[
+            'aspect-[4/5] w-full object-cover sm:w-36',
+            data.coverSquareCorners ? 'rounded-none' : 'rounded-2xl',
+          ]}
           loading="lazy"
         />
       )}

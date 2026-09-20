@@ -10,6 +10,7 @@ speakers:
     role: "Professor of Philosophy, University of Fribourg (Switzerland)"
 summary: "One of the most pressing questions in modern medicine and ethics: what is death?"
 image: /src/assets/uploads/events/online-conferences/2026-04-20-organ-transplant.jpg
+coverSquareCorners: true
 gallery: []
 links: []
 featured: false

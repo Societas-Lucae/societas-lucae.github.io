@@ -8,6 +8,7 @@ online: false
 speakers: []
 summary: "International congress in Rome on AI and medicine. Societas Lucae hosted a round table with young physicians on AI and human values: the contribution of Christian faith."
 image: /src/assets/uploads/events/congress-rome-2025/flyer.jpg
+coverSquareCorners: true
 gallery:
   - /src/assets/uploads/events/congress-rome-2025/panel.jpg
   - /src/assets/uploads/events/congress-rome-2025/audience.jpg
