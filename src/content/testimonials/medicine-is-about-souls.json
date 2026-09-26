@@ -1,5 +1,9 @@
 {
+  "name": "Medical student",
+  "role": "",
+  "country": "Brazil",
   "quote": "Because medicine is not only about bodies; it is also about souls. Not only the souls of our patients, but also those of physicians and future physicians.",
+  "image": "",
   "published": true,
   "order": 3
 }
